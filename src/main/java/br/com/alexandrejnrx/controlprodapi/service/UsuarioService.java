@@ -18,4 +18,8 @@ public class UsuarioService {
     public List<Usuario> listarUsuarios() {
         return usuarioRepository.findAll();
     }
+
+    public void cadastrarUsuario(Usuario usuario) {
+        usuarioRepository.save(usuario);
+    }
 }
