@@ -1,7 +1,10 @@
 package br.com.alexandrejnrx.controlprodapi.service;
 
+import br.com.alexandrejnrx.controlprodapi.model.Usuario;
 import br.com.alexandrejnrx.controlprodapi.repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UsuarioService {
@@ -10,5 +13,9 @@ public class UsuarioService {
 
     public UsuarioService(UsuarioRepository usuarioRepository) {
         this.usuarioRepository = usuarioRepository;
+    }
+
+    public List<Usuario> listarUsuarios() {
+        return usuarioRepository.findAll();
     }
 }
