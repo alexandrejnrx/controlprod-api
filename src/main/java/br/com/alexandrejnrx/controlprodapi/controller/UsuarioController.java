@@ -1,5 +1,7 @@
 package br.com.alexandrejnrx.controlprodapi.controller;
 
+import br.com.alexandrejnrx.controlprodapi.dto.UsuarioRequestDTO;
+import br.com.alexandrejnrx.controlprodapi.dto.UsuarioResponseDTO;
 import br.com.alexandrejnrx.controlprodapi.model.Usuario;
 import br.com.alexandrejnrx.controlprodapi.service.UsuarioService;
 import org.springframework.web.bind.annotation.*;
@@ -16,13 +18,13 @@ public class UsuarioController {
     }
 
     @GetMapping("/listar-usuarios")
-    public List<Usuario> listarUsuarios() {
+    public List<UsuarioResponseDTO> listarUsuarios() {
         return usuarioService.listarUsuarios();
     }
 
     @PostMapping("/cadastrar-usuario")
-    public void cadastrarUsuario(@RequestBody Usuario usuario) {
-        usuarioService.cadastrarUsuario(usuario);
+    public void cadastrarUsuario(@RequestBody UsuarioRequestDTO usuarioRequestDTO) {
+        usuarioService.cadastrarUsuario(usuarioRequestDTO);
     }
 
     @DeleteMapping("/deletar-usuario/{id}")
@@ -31,7 +33,7 @@ public class UsuarioController {
     }
 
     @PutMapping("/alterar-dados/{id}")
-    public void alterarDados(@PathVariable("id") Integer id, @RequestBody Usuario usuario) {
-        usuarioService.alterarDados(id, usuario);
+    public void alterarDados(@PathVariable("id") Integer id, @RequestBody UsuarioRequestDTO usuarioRequestDTO) {
+        usuarioService.alterarDados(id, usuarioRequestDTO);
     }
 }

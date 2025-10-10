@@ -1,10 +1,14 @@
 package br.com.alexandrejnrx.controlprodapi.service;
 
+import br.com.alexandrejnrx.controlprodapi.dto.UsuarioRequestDTO;
+import br.com.alexandrejnrx.controlprodapi.dto.UsuarioResponseDTO;
+import br.com.alexandrejnrx.controlprodapi.dto.converter.UsuarioConverter;
 import br.com.alexandrejnrx.controlprodapi.model.Usuario;
 import br.com.alexandrejnrx.controlprodapi.repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UsuarioService {
@@ -15,31 +19,38 @@ public class UsuarioService {
         this.usuarioRepository = usuarioRepository;
     }
 
-    public List<Usuario> listarUsuarios() {
-        return usuarioRepository.findAll();
+    public List<UsuarioResponseDTO> listarUsuarios() {
+        return usuarioRepository.findAll()
+                .stream().
+                map(UsuarioConverter::converterEntidadeParaDTO)
+                .collect(Collectors.toList());
     }
 
-    public void cadastrarUsuario(Usuario usuario) {
-        usuarioRepository.save(usuario);
+    public void cadastrarUsuario(UsuarioRequestDTO usuarioRequestDTO) {
+        Usuario usuarioParaCadastrar = UsuarioConverter.converterDTOParaEntidade(usuarioRequestDTO);
+
+        usuarioRepository.save(usuarioParaCadastrar);
     }
 
     public void deletarUsuario(Integer id) {
         usuarioRepository.deleteById(id);
     }
 
-    public void alterarDados(Integer id, Usuario usuario) {
+    public void alterarDados(Integer id, UsuarioRequestDTO usuarioRequestDTO) {
         Usuario usuarioEncontrado = usuarioRepository.findById(id).get();
 
-        if (usuario.getNome() != null) {
-            usuarioEncontrado.setNome(usuario.getNome());
+        Usuario usuarioParaAlterar = UsuarioConverter.converterDTOParaEntidade(usuarioRequestDTO);
+
+        if (usuarioParaAlterar.getNome() != null) {
+            usuarioEncontrado.setNome(usuarioRequestDTO.getNome());
         }
 
-        if (usuario.getNomeUsuario() != null) {
-            usuarioEncontrado.setNomeUsuario(usuario.getNomeUsuario());
+        if (usuarioParaAlterar.getNomeUsuario() != null) {
+            usuarioEncontrado.setNomeUsuario(usuarioRequestDTO.getNomeUsuario());
         }
 
-        if (usuario.getSenha() != null) {
-            usuarioEncontrado.setNome(usuario.getNome());
+        if (usuarioParaAlterar.getSenha() != null) {
+            usuarioEncontrado.setNome(usuarioRequestDTO.getSenha());
         }
 
         usuarioRepository.save(usuarioEncontrado);
