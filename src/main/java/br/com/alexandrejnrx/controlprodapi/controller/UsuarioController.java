@@ -2,8 +2,8 @@ package br.com.alexandrejnrx.controlprodapi.controller;
 
 import br.com.alexandrejnrx.controlprodapi.dto.UsuarioRequestDTO;
 import br.com.alexandrejnrx.controlprodapi.dto.UsuarioResponseDTO;
-import br.com.alexandrejnrx.controlprodapi.model.Usuario;
 import br.com.alexandrejnrx.controlprodapi.service.UsuarioService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,7 +23,7 @@ public class UsuarioController {
     }
 
     @PostMapping("/cadastrar-usuario")
-    public void cadastrarUsuario(@RequestBody UsuarioRequestDTO usuarioRequestDTO) {
+    public void cadastrarUsuario(@Valid @RequestBody UsuarioRequestDTO usuarioRequestDTO) {
         usuarioService.cadastrarUsuario(usuarioRequestDTO);
     }
 
