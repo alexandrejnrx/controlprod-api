@@ -1,15 +1,20 @@
-package br.com.alexandrejnrx.controlprodapi.dto;
+    package br.com.alexandrejnrx.controlprodapi.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+    import jakarta.validation.constraints.NotBlank;
+    import lombok.Getter;
+    import lombok.Setter;
 
-@Getter
-@Setter
-public class UsuarioRequestDTO {
+    @Getter
+    @Setter
+    public class UsuarioRequestDTO {
 
-    private String nome;
-    private String nomeUsuario;
-    private String email;
-    private String senha;
+        @NotBlank(message = "O campo nome não pode ser vazio.")
+        private String nome;
+        @NotBlank(message = "O campo nome de usuário não pode ser vazio.")
+        private String nomeUsuario;
+        @NotBlank(message = "O campo e-mail não pode ser vazio.")
+        private String email;
+        @NotBlank(message = "O campo senha não pode ser vazio.")
+        private String senha;
 
-}
+    }
