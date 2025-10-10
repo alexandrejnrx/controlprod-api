@@ -26,4 +26,22 @@ public class UsuarioService {
     public void deletarUsuario(Integer id) {
         usuarioRepository.deleteById(id);
     }
+
+    public void alterarDados(Integer id, Usuario usuario) {
+        Usuario usuarioEncontrado = usuarioRepository.findById(id).get();
+
+        if (usuario.getNome() != null) {
+            usuarioEncontrado.setNome(usuario.getNome());
+        }
+
+        if (usuario.getNomeUsuario() != null) {
+            usuarioEncontrado.setNomeUsuario(usuario.getNomeUsuario());
+        }
+
+        if (usuario.getSenha() != null) {
+            usuarioEncontrado.setNome(usuario.getNome());
+        }
+
+        usuarioRepository.save(usuarioEncontrado);
+    }
 }

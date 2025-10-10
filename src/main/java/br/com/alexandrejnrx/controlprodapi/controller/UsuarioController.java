@@ -26,7 +26,12 @@ public class UsuarioController {
     }
 
     @DeleteMapping("/deletar-usuario/{id}")
-    public void deletarUsuario(@PathVariable("id") Integer id){
+    public void deletarUsuario(@PathVariable("id") Integer id) {
         usuarioService.deletarUsuario(id);
+    }
+
+    @PutMapping("/alterar-dados/{id}")
+    public void alterarDados(@PathVariable("id") Integer id, @RequestBody Usuario usuario) {
+        usuarioService.alterarDados(id, usuario);
     }
 }
