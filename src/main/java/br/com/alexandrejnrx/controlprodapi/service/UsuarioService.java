@@ -22,4 +22,8 @@ public class UsuarioService {
     public void cadastrarUsuario(Usuario usuario) {
         usuarioRepository.save(usuario);
     }
+
+    public void deletarUsuario(Integer id) {
+        usuarioRepository.deleteById(id);
+    }
 }
