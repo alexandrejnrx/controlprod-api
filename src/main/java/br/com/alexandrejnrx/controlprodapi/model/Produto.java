@@ -17,8 +17,8 @@ public class Produto {
     private Integer id;
     @Column(name = "numero_unico_producao", nullable = false, unique = true)
     private Integer numeroUnicoProducao;
-    @Column(unique = true)
-    private Integer serial;
+    @Column(name = "numeroSerie", unique = true)
+    private Integer numeroSerie; //numero_serie
     @Column(name = "data_producao")
     private LocalDate dataProducao;
     @Column(nullable = false)
