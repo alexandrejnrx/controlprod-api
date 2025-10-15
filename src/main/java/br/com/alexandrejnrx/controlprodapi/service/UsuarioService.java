@@ -5,6 +5,7 @@ import br.com.alexandrejnrx.controlprodapi.dto.UsuarioResponseDTO;
 import br.com.alexandrejnrx.controlprodapi.dto.converter.UsuarioConverter;
 import br.com.alexandrejnrx.controlprodapi.model.Usuario;
 import br.com.alexandrejnrx.controlprodapi.repository.UsuarioRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,9 +15,11 @@ import java.util.stream.Collectors;
 public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UsuarioService(UsuarioRepository usuarioRepository) {
+    public UsuarioService(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
         this.usuarioRepository = usuarioRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public List<UsuarioResponseDTO> listarUsuarios() {
@@ -28,6 +31,7 @@ public class UsuarioService {
 
     public void cadastrarUsuario(UsuarioRequestDTO usuarioRequestDTO) {
         Usuario usuarioParaCadastrar = UsuarioConverter.converterDTOParaEntidade(usuarioRequestDTO);
+        usuarioParaCadastrar.setSenha(passwordEncoder.encode(usuarioRequestDTO.getSenha()));
 
         usuarioRepository.save(usuarioParaCadastrar);
     }
