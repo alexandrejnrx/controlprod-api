@@ -1,4 +1,4 @@
-package br.com.alexandrejnrx.controlprodapi.controller;
+package br.com.alexandrejnrx.controlprodapi.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
