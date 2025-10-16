@@ -1,6 +1,7 @@
 package br.com.alexandrejnrx.controlprodapi.controller;
 
-import br.com.alexandrejnrx.controlprodapi.model.Produto;
+import br.com.alexandrejnrx.controlprodapi.dto.ProdutoRequestDTO;
+import br.com.alexandrejnrx.controlprodapi.dto.ProdutoResponseDTO;
 import br.com.alexandrejnrx.controlprodapi.service.ProdutoService;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,12 +18,12 @@ public class ProdutoController {
     }
 
     @GetMapping("/listar-produtos")
-    public List<Produto> listarProdutos() {
+    public List<ProdutoResponseDTO> listarProdutos() {
         return produtoService.listarProdutos();
     }
 
     @PostMapping("/cadastrar-produto")
-    public Produto cadastrarProduto(@RequestBody Produto produto) {
-        return produtoService.cadastrarProduto(produto);
+    public void cadastrarProduto(@RequestBody ProdutoRequestDTO produtoRequestDTO) {
+        produtoService.cadastrarProduto(produtoRequestDTO);
     }
 }

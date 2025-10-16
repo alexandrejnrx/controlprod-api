@@ -1,10 +1,14 @@
 package br.com.alexandrejnrx.controlprodapi.service;
 
+import br.com.alexandrejnrx.controlprodapi.dto.ProdutoRequestDTO;
+import br.com.alexandrejnrx.controlprodapi.dto.ProdutoResponseDTO;
+import br.com.alexandrejnrx.controlprodapi.dto.converter.ProdutoConverter;
 import br.com.alexandrejnrx.controlprodapi.model.Produto;
 import br.com.alexandrejnrx.controlprodapi.repository.ProdutoRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProdutoService {
@@ -15,11 +19,16 @@ public class ProdutoService {
         this.produtoRepository = produtoRepository;
     }
 
-    public List<Produto> listarProdutos() {
-        return produtoRepository.findAll();
+    public List<ProdutoResponseDTO> listarProdutos() {
+        return produtoRepository.findAll()
+                .stream()
+                .map(ProdutoConverter::converterEntidadeParaDTO)
+                .collect(Collectors.toList());
     }
 
-    public Produto cadastrarProduto(Produto produto) {
-        return produtoRepository.save(produto);
+    public void cadastrarProduto(ProdutoRequestDTO produtoRequestDTO) {
+        Produto produtoParaCadastrar = ProdutoConverter.converterDTOParaEntidade(produtoRequestDTO);
+
+        produtoRepository.save(produtoParaCadastrar);
     }
 }
