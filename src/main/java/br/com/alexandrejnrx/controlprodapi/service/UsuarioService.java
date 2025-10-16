@@ -5,8 +5,10 @@ import br.com.alexandrejnrx.controlprodapi.dto.UsuarioResponseDTO;
 import br.com.alexandrejnrx.controlprodapi.dto.converter.UsuarioConverter;
 import br.com.alexandrejnrx.controlprodapi.model.Usuario;
 import br.com.alexandrejnrx.controlprodapi.repository.UsuarioRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,6 +18,8 @@ public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
+    private static final String ERRO_NOME_USUARIO_JA_CADASTRADO = "Nome de usuário já cadastrado";
+    private static final String ERRO_EMAIL_JA_CADASTRADO = "E-mail já cadastrado";
 
     public UsuarioService(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
         this.usuarioRepository = usuarioRepository;
@@ -30,7 +34,21 @@ public class UsuarioService {
     }
 
     public void cadastrarUsuario(UsuarioRequestDTO usuarioRequestDTO) {
+        String nomeUsuarioNormalizado = normalizarDados(usuarioRequestDTO.getNomeUsuario());
+        String emailNormalizado = normalizarDados(usuarioRequestDTO.getEmail());
+
+        if (usuarioRepository.existsByNomeUsuario(nomeUsuarioNormalizado)) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, ERRO_NOME_USUARIO_JA_CADASTRADO);
+        }
+
+        if (usuarioRepository.existsByEmail(emailNormalizado)) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, ERRO_EMAIL_JA_CADASTRADO);
+        }
+
         Usuario usuarioParaCadastrar = UsuarioConverter.converterDTOParaEntidade(usuarioRequestDTO);
+
+        usuarioParaCadastrar.setNomeUsuario(nomeUsuarioNormalizado);
+        usuarioParaCadastrar.setEmail(emailNormalizado);
         usuarioParaCadastrar.setSenha(passwordEncoder.encode(usuarioRequestDTO.getSenha()));
 
         usuarioRepository.save(usuarioParaCadastrar);
@@ -43,20 +61,23 @@ public class UsuarioService {
     public void alterarDados(Integer id, UsuarioRequestDTO usuarioRequestDTO) {
         Usuario usuarioEncontrado = usuarioRepository.findById(id).get();
 
-        Usuario usuarioParaAlterar = UsuarioConverter.converterDTOParaEntidade(usuarioRequestDTO);
-
-        if (usuarioParaAlterar.getNome() != null) {
+        if (usuarioRequestDTO.getNome() != null) {
             usuarioEncontrado.setNome(usuarioRequestDTO.getNome());
         }
 
-        if (usuarioParaAlterar.getNomeUsuario() != null) {
-            usuarioEncontrado.setNomeUsuario(usuarioRequestDTO.getNomeUsuario());
+        if (usuarioRequestDTO.getNomeUsuario() != null) {
+            String nomeUsuarioNormalizado = normalizarDados(usuarioRequestDTO.getNomeUsuario());
+            usuarioEncontrado.setNomeUsuario(nomeUsuarioNormalizado);
         }
 
-        if (usuarioParaAlterar.getSenha() != null) {
-            usuarioEncontrado.setNome(usuarioRequestDTO.getSenha());
+        if (usuarioRequestDTO.getSenha() != null) {
+            usuarioEncontrado.setSenha(passwordEncoder.encode(usuarioRequestDTO.getSenha()));
         }
 
         usuarioRepository.save(usuarioEncontrado);
+    }
+
+    private String normalizarDados(String dados) {
+        return dados.toLowerCase().trim();
     }
 }
