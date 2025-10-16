@@ -6,16 +6,6 @@ import br.com.alexandrejnrx.controlprodapi.model.Usuario;
 
 public class UsuarioConverter {
 
-    public static UsuarioResponseDTO converterEntidadeParaDTO(Usuario usuario) {
-        UsuarioResponseDTO usuarioResponseDTO = new UsuarioResponseDTO();
-
-        usuarioResponseDTO.setNome(usuario.getNome());
-        usuarioResponseDTO.setNomeUsuario(usuario.getNomeUsuario());
-        usuarioResponseDTO.setEmail(usuario.getEmail());
-
-        return usuarioResponseDTO;
-    }
-
     public static Usuario converterDTOParaEntidade(UsuarioRequestDTO usuarioRequestDTO) {
         Usuario usuario = new Usuario();
 
@@ -25,5 +15,15 @@ public class UsuarioConverter {
         usuario.setSenha(usuarioRequestDTO.getSenha());
 
         return usuario;
+    }
+
+    public static UsuarioResponseDTO converterEntidadeParaDTO(Usuario usuario) {
+        UsuarioResponseDTO usuarioResponseDTO = new UsuarioResponseDTO();
+
+        usuarioResponseDTO.setNome(usuario.getNome());
+        usuarioResponseDTO.setNomeUsuario(usuario.getNomeUsuario());
+        usuarioResponseDTO.setEmail(usuario.getEmail());
+
+        return usuarioResponseDTO;
     }
 }
