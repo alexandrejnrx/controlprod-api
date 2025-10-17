@@ -67,7 +67,10 @@ public class UsuarioService {
 
         if (usuarioRequestDTO.getNomeUsuario() != null) {
             String nomeUsuarioNormalizado = normalizarDados(usuarioRequestDTO.getNomeUsuario());
-            usuarioEncontrado.setNomeUsuario(nomeUsuarioNormalizado);
+
+            if (!usuarioEncontrado.getNomeUsuario().equals(nomeUsuarioNormalizado)) {
+                usuarioEncontrado.setNomeUsuario(nomeUsuarioNormalizado);
+            }
         }
 
         if (usuarioRequestDTO.getSenha() != null) {
