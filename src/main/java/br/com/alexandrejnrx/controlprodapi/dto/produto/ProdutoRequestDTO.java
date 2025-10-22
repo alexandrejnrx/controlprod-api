@@ -1,4 +1,4 @@
-package br.com.alexandrejnrx.controlprodapi.dto;
+package br.com.alexandrejnrx.controlprodapi.dto.produto;
 
 import lombok.Getter;
 import lombok.Setter;

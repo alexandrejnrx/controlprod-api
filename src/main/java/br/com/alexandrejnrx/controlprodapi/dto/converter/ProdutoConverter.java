@@ -1,7 +1,7 @@
 package br.com.alexandrejnrx.controlprodapi.dto.converter;
 
-import br.com.alexandrejnrx.controlprodapi.dto.ProdutoRequestDTO;
-import br.com.alexandrejnrx.controlprodapi.dto.ProdutoResponseDTO;
+import br.com.alexandrejnrx.controlprodapi.dto.produto.ProdutoRequestDTO;
+import br.com.alexandrejnrx.controlprodapi.dto.produto.ProdutoResponseDTO;
 import br.com.alexandrejnrx.controlprodapi.model.Produto;
 
 public class ProdutoConverter {

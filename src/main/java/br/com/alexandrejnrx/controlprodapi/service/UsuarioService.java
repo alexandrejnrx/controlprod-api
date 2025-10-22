@@ -1,7 +1,7 @@
 package br.com.alexandrejnrx.controlprodapi.service;
 
-import br.com.alexandrejnrx.controlprodapi.dto.UsuarioRequestDTO;
-import br.com.alexandrejnrx.controlprodapi.dto.UsuarioResponseDTO;
+import br.com.alexandrejnrx.controlprodapi.dto.usuario.UsuarioRequestDTO;
+import br.com.alexandrejnrx.controlprodapi.dto.usuario.UsuarioResponseDTO;
 import br.com.alexandrejnrx.controlprodapi.dto.converter.UsuarioConverter;
 import br.com.alexandrejnrx.controlprodapi.model.Usuario;
 import br.com.alexandrejnrx.controlprodapi.repository.UsuarioRepository;

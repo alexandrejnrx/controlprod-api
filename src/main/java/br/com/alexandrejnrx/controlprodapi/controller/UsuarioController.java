@@ -1,7 +1,7 @@
 package br.com.alexandrejnrx.controlprodapi.controller;
 
-import br.com.alexandrejnrx.controlprodapi.dto.UsuarioRequestDTO;
-import br.com.alexandrejnrx.controlprodapi.dto.UsuarioResponseDTO;
+import br.com.alexandrejnrx.controlprodapi.dto.usuario.UsuarioRequestDTO;
+import br.com.alexandrejnrx.controlprodapi.dto.usuario.UsuarioResponseDTO;
 import br.com.alexandrejnrx.controlprodapi.service.UsuarioService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;

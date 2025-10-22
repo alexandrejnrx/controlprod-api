@@ -1,4 +1,4 @@
-package br.com.alexandrejnrx.controlprodapi.dto;
+package br.com.alexandrejnrx.controlprodapi.dto.usuario;
 
 import br.com.alexandrejnrx.controlprodapi.model.PerfilUsuario;
 import jakarta.validation.constraints.NotBlank;
