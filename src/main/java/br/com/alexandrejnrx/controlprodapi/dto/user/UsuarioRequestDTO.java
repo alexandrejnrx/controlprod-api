@@ -1,6 +1,8 @@
 package br.com.alexandrejnrx.controlprodapi.dto;
 
+import br.com.alexandrejnrx.controlprodapi.model.PerfilUsuario;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,5 +18,7 @@ public class UsuarioRequestDTO {
     private String email;
     @NotBlank(message = "O campo senha não pode ser vazio.")
     private String senha;
+    @NotNull(message = "O perfil é obrigatório")
+    private PerfilUsuario perfil;
 
 }
