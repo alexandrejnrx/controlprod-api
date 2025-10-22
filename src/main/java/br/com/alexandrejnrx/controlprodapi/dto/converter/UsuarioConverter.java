@@ -1,7 +1,7 @@
 package br.com.alexandrejnrx.controlprodapi.dto.converter;
 
-import br.com.alexandrejnrx.controlprodapi.dto.UsuarioRequestDTO;
-import br.com.alexandrejnrx.controlprodapi.dto.UsuarioResponseDTO;
+import br.com.alexandrejnrx.controlprodapi.dto.usuario.UsuarioRequestDTO;
+import br.com.alexandrejnrx.controlprodapi.dto.usuario.UsuarioResponseDTO;
 import br.com.alexandrejnrx.controlprodapi.model.Usuario;
 
 public class UsuarioConverter {
@@ -13,6 +13,7 @@ public class UsuarioConverter {
         usuario.setNomeUsuario(usuarioRequestDTO.getNomeUsuario());
         usuario.setEmail(usuarioRequestDTO.getEmail());
         usuario.setSenha(usuarioRequestDTO.getSenha());
+        usuario.setPerfil(usuarioRequestDTO.getPerfil());
 
         return usuario;
     }
