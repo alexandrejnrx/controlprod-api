@@ -33,10 +33,10 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> cadastrar(@Valid @RequestBody UsuarioRequestDTO usuarioRequestDTO) {
-        usuarioService.cadastrarUsuario(usuarioRequestDTO);
+    public ResponseEntity<UsuarioResponseDTO> cadastrar(@Valid @RequestBody UsuarioRequestDTO usuarioRequestDTO) {
+        UsuarioResponseDTO usuarioCriado = usuarioService.cadastrarUsuario(usuarioRequestDTO);
 
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioCriado);
     }
 
     @DeleteMapping("/{id}")

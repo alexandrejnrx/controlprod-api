@@ -39,7 +39,7 @@ public class UsuarioService {
                 .map(UsuarioConverter::converterEntidadeParaDTO);
     }
 
-    public void cadastrarUsuario(UsuarioRequestDTO usuarioRequestDTO) {
+    public UsuarioResponseDTO cadastrarUsuario(UsuarioRequestDTO usuarioRequestDTO) {
         String nomeUsuarioNormalizado = normalizarDados(usuarioRequestDTO.getNomeUsuario());
         String emailNormalizado = normalizarDados(usuarioRequestDTO.getEmail());
 
@@ -57,7 +57,9 @@ public class UsuarioService {
         usuarioParaCadastrar.setEmail(emailNormalizado);
         usuarioParaCadastrar.setSenha(passwordEncoder.encode(usuarioRequestDTO.getSenha()));
 
-        usuarioRepository.save(usuarioParaCadastrar);
+        Usuario usuarioSalvo = usuarioRepository.save(usuarioParaCadastrar);
+
+        return UsuarioConverter.converterEntidadeParaDTO(usuarioSalvo);
     }
 
     public void deletarUsuario(Integer id) {
