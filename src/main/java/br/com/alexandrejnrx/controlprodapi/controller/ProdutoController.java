@@ -17,13 +17,13 @@ public class ProdutoController {
         this.produtoService = produtoService;
     }
 
-    @GetMapping("/listar-produtos")
+    @GetMapping
     public List<ProdutoResponseDTO> listarProdutos() {
         return produtoService.listarProdutos();
     }
 
-    @PostMapping("/cadastrar-produto")
-    public void cadastrarProduto(@RequestBody ProdutoRequestDTO produtoRequestDTO) {
+    @PostMapping
+    public void cadastrar(@RequestBody ProdutoRequestDTO produtoRequestDTO) {
         produtoService.cadastrarProduto(produtoRequestDTO);
     }
 }
