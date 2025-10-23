@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,6 +32,11 @@ public class UsuarioService {
                 .stream().
                 map(UsuarioConverter::converterEntidadeParaDTO)
                 .collect(Collectors.toList());
+    }
+
+    public Optional<UsuarioResponseDTO> buscarPorId(Integer id) {
+        return usuarioRepository.findById(id)
+                .map(UsuarioConverter::converterEntidadeParaDTO);
     }
 
     public void cadastrarUsuario(UsuarioRequestDTO usuarioRequestDTO) {
