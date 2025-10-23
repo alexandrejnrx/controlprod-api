@@ -26,9 +26,10 @@ public class ProdutoService {
                 .collect(Collectors.toList());
     }
 
-    public void cadastrarProduto(ProdutoRequestDTO produtoRequestDTO) {
+    public ProdutoResponseDTO cadastrarProduto(ProdutoRequestDTO produtoRequestDTO) {
         Produto produtoParaCadastrar = ProdutoConverter.converterDTOParaEntidade(produtoRequestDTO);
+        Produto produtoSalvo = produtoRepository.save(produtoParaCadastrar);
 
-        produtoRepository.save(produtoParaCadastrar);
+        return ProdutoConverter.converterEntidadeParaDTO(produtoSalvo);
     }
 }
