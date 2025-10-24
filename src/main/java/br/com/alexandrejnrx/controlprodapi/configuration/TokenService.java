@@ -1,6 +1,6 @@
 package br.com.alexandrejnrx.controlprodapi.configuration;
 
-import br.com.alexandrejnrx.controlprodapi.model.Usuario;
+import br.com.alexandrejnrx.controlprodapi.model.User;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
@@ -18,12 +18,12 @@ public class TokenService {
     @Value("${api.security.token.secret}")
     private String secret;
 
-    public String generateToken(Usuario usuario) {
+    public String generateToken(User user) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             String token = JWT.create()
                     .withIssuer("controlprod-api")
-                    .withSubject(usuario.getNomeUsuario())
+                    .withSubject(user.getUsername())
                     .withExpiresAt(generateExpirationDate())
                     .sign(algorithm);
             return token;

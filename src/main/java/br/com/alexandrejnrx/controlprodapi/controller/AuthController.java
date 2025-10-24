@@ -3,7 +3,7 @@ package br.com.alexandrejnrx.controlprodapi.controller;
 import br.com.alexandrejnrx.controlprodapi.configuration.TokenService;
 import br.com.alexandrejnrx.controlprodapi.dto.auth.AuthDTO;
 import br.com.alexandrejnrx.controlprodapi.dto.auth.LoginResponseDTO;
-import br.com.alexandrejnrx.controlprodapi.model.Usuario;
+import br.com.alexandrejnrx.controlprodapi.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,9 +28,9 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody AuthDTO authDTO) {
 
-        var usernamePassword = new UsernamePasswordAuthenticationToken(authDTO.nomeUsuario(), authDTO.senha());
+        var usernamePassword = new UsernamePasswordAuthenticationToken(authDTO.username(), authDTO.password());
         var auth = this.authenticationManager.authenticate(usernamePassword);
-        var token = tokenService.generateToken((Usuario) auth.getPrincipal());
+        var token = tokenService.generateToken((User) auth.getPrincipal());
 
         return ResponseEntity.ok(new LoginResponseDTO(token));
     }

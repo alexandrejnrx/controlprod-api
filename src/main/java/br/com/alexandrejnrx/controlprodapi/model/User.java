@@ -11,29 +11,29 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
-@Table(name = "usuarios")
+@Table(name = "users")
 @Getter
 @Setter
-public class Usuario implements UserDetails {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(nullable = false, length = 100)
-    private String nome;
-    @Column(name = "nome_usuario", nullable = false, length = 20, unique = true)
-    private String nomeUsuario;
+    private String name;
+    @Column(nullable = false, length = 20, unique = true)
+    private String username;
     @Column(nullable = false, length = 100, unique = true)
     private String email;
     @Column(nullable = false)
-    private String senha;
-    @Enumerated(EnumType.STRING) // ✅ IMPORTANTE: Salva como texto no banco
+    private String password;
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 10)
-    private PerfilUsuario perfil;
+    private Role role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if (this.perfil == PerfilUsuario.ADMIN) {
+        if (this.role == Role.ADMIN) {
             return List.of(
                     new SimpleGrantedAuthority("ROLE_ADMIN"),
                     new SimpleGrantedAuthority("ROLE_USER")
@@ -45,12 +45,12 @@ public class Usuario implements UserDetails {
 
     @Override
     public String getPassword() {
-        return this.senha;
+        return this.password;
     }
 
     @Override
     public String getUsername() {
-        return this.nomeUsuario;
+        return this.username;
     }
 
     @Override
