@@ -1,8 +1,9 @@
 package br.com.alexandrejnrx.controlprodapi.service;
 
+import br.com.alexandrejnrx.controlprodapi.dto.converter.UsuarioConverter;
 import br.com.alexandrejnrx.controlprodapi.dto.usuario.UsuarioRequestDTO;
 import br.com.alexandrejnrx.controlprodapi.dto.usuario.UsuarioResponseDTO;
-import br.com.alexandrejnrx.controlprodapi.dto.converter.UsuarioConverter;
+import br.com.alexandrejnrx.controlprodapi.exception.UserNotFoundException;
 import br.com.alexandrejnrx.controlprodapi.model.Usuario;
 import br.com.alexandrejnrx.controlprodapi.repository.UsuarioRepository;
 import org.springframework.http.HttpStatus;
@@ -11,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,9 +34,10 @@ public class UsuarioService {
                 .collect(Collectors.toList());
     }
 
-    public Optional<UsuarioResponseDTO> buscarPorId(Integer id) {
+    public UsuarioResponseDTO buscarPorId(Integer id) {
         return usuarioRepository.findById(id)
-                .map(UsuarioConverter::converterEntidadeParaDTO);
+                .map(UsuarioConverter::converterEntidadeParaDTO)
+                .orElseThrow(() -> new UserNotFoundException());
     }
 
     public UsuarioResponseDTO cadastrarUsuario(UsuarioRequestDTO usuarioRequestDTO) {
@@ -58,16 +59,19 @@ public class UsuarioService {
         usuarioParaCadastrar.setSenha(passwordEncoder.encode(usuarioRequestDTO.getSenha()));
 
         Usuario usuarioSalvo = usuarioRepository.save(usuarioParaCadastrar);
-
         return UsuarioConverter.converterEntidadeParaDTO(usuarioSalvo);
     }
 
     public void deletarUsuario(Integer id) {
-        usuarioRepository.deleteById(id);
+        Usuario usuarioEncontrado = usuarioRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException());
+
+        usuarioRepository.delete(usuarioEncontrado);
     }
 
-    public void alterarDados(Integer id, UsuarioRequestDTO usuarioRequestDTO) {
-        Usuario usuarioEncontrado = usuarioRepository.findById(id).get();
+    public UsuarioResponseDTO alterarDados(Integer id, UsuarioRequestDTO usuarioRequestDTO) {
+        Usuario usuarioEncontrado = usuarioRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException());
 
         if (usuarioRequestDTO.getNome() != null) {
             usuarioEncontrado.setNome(usuarioRequestDTO.getNome());
@@ -85,7 +89,8 @@ public class UsuarioService {
             usuarioEncontrado.setSenha(passwordEncoder.encode(usuarioRequestDTO.getSenha()));
         }
 
-        usuarioRepository.save(usuarioEncontrado);
+        Usuario usuarioAtualizado = usuarioRepository.save(usuarioEncontrado);
+        return UsuarioConverter.converterEntidadeParaDTO(usuarioAtualizado);
     }
 
     private String normalizarDados(String dados) {

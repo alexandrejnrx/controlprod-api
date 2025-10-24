@@ -27,9 +27,9 @@ public class UsuarioController {
 
     @GetMapping("/{id}")
     public ResponseEntity<UsuarioResponseDTO> buscar(@PathVariable Integer id) {
-        return usuarioService.buscarPorId(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        UsuarioResponseDTO usuarioResponseDTO = usuarioService.buscarPorId(id);
+
+        return ResponseEntity.ok(usuarioResponseDTO);
     }
 
     @PostMapping
@@ -47,9 +47,10 @@ public class UsuarioController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> atualizar(@PathVariable("id") Integer id, @RequestBody UsuarioRequestDTO usuarioRequestDTO) {
+    public ResponseEntity<UsuarioResponseDTO> atualizar(@PathVariable("id") Integer id, @RequestBody UsuarioRequestDTO usuarioRequestDTO) {
+        UsuarioResponseDTO usuarioAtualizado = usuarioService.alterarDados(id, usuarioRequestDTO);
         usuarioService.alterarDados(id, usuarioRequestDTO);
 
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioAtualizado);
     }
 }
