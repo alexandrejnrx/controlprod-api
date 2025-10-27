@@ -20,20 +20,27 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ProductResponseDTO>> listarProdutos() {
-        return ResponseEntity.ok(productService.listarProdutos());
+    public ResponseEntity<List<ProductResponseDTO>> findAll() {
+        return ResponseEntity.ok(productService.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProductResponseDTO> buscar(@PathVariable Integer id) {
-        ProductResponseDTO productResponseDTO = productService.buscarPorId(id);
+    public ResponseEntity<ProductResponseDTO> findById(@PathVariable Integer id) {
+        ProductResponseDTO productResponseDTO = productService.findById(id);
         return ResponseEntity.ok(productResponseDTO);
     }
 
     @PostMapping
-    public ResponseEntity<ProductResponseDTO> cadastrar(@RequestBody ProductRequestDTO productRequestDTO) {
-        ProductResponseDTO produtoCriado = productService.cadastrarProduto(productRequestDTO);
+    public ResponseEntity<ProductResponseDTO> create(@RequestBody ProductRequestDTO productRequestDTO) {
+        ProductResponseDTO createdProduct = productService.create(productRequestDTO);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(produtoCriado);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdProduct);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+        productService.delete(id);
+
+        return ResponseEntity.noContent().build();
     }
 }

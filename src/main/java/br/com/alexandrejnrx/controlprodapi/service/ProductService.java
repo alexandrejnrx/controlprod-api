@@ -20,23 +20,30 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public List<ProductResponseDTO> listarProdutos() {
+    public List<ProductResponseDTO> findAll() {
         return productRepository.findAll()
                 .stream()
                 .map(ProductConverter::converterEntidadeParaDTO)
                 .collect(Collectors.toList());
     }
 
-    public ProductResponseDTO buscarPorId(Integer id) {
+    public ProductResponseDTO findById(Integer id) {
         return productRepository.findById(id)
                 .map(ProductConverter::converterEntidadeParaDTO)
                 .orElseThrow(() -> new ProductNotFoundException());
     }
 
-    public ProductResponseDTO cadastrarProduto(ProductRequestDTO productRequestDTO) {
-        Product productParaCadastrar = ProductConverter.converterDTOParaEntidade(productRequestDTO);
-        Product productSalvo = productRepository.save(productParaCadastrar);
+    public ProductResponseDTO create(ProductRequestDTO productRequestDTO) {
+        Product productToCreate = ProductConverter.converterDTOParaEntidade(productRequestDTO);
+        Product productToSave = productRepository.save(productToCreate);
 
-        return ProductConverter.converterEntidadeParaDTO(productSalvo);
+        return ProductConverter.converterEntidadeParaDTO(productToSave);
+    }
+
+    public void delete(Integer id) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new ProductNotFoundException());
+
+        productRepository.deleteById(id);
     }
 }
