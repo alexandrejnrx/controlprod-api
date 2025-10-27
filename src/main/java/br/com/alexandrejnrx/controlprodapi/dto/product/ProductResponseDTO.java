@@ -1,4 +1,4 @@
-package br.com.alexandrejnrx.controlprodapi.dto.produto;
+package br.com.alexandrejnrx.controlprodapi.dto.product;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-public class ProdutoRequestDTO {
+public class ProductResponseDTO {
 
     private Integer numeroUnicoProducao;
     private Integer numeroSerie;
