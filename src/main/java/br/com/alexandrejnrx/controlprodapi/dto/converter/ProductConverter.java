@@ -9,11 +9,11 @@ public class ProductConverter {
     public static Product converterDTOParaEntidade(ProductRequestDTO productRequestDTO) {
         Product product = new Product();
 
-        product.setNumeroUnicoProducao(productRequestDTO.getNumeroUnicoProducao());
-        product.setNumeroSerie(productRequestDTO.getNumeroSerie());
-        product.setDataProducao(productRequestDTO.getDataProducao());
-        product.setLote(productRequestDTO.getLote());
-        product.setResponsavel(productRequestDTO.getResponsavel());
+        product.setUniqueProductNumber(productRequestDTO.getUniqueProductNumber());
+        product.setSerialNumber(productRequestDTO.getSerialNumber());
+        product.setProductionDate(productRequestDTO.getProductionDate());
+        product.setBatchNumber(productRequestDTO.getBatchNumber());
+        product.setProducerName(productRequestDTO.getProducerName());
 
         return product;
     }
@@ -21,11 +21,11 @@ public class ProductConverter {
     public static ProductResponseDTO converterEntidadeParaDTO(Product product) {
         ProductResponseDTO productResponseDTO = new ProductResponseDTO();
 
-        productResponseDTO.setNumeroUnicoProducao(product.getNumeroUnicoProducao());
-        productResponseDTO.setNumeroSerie(product.getNumeroSerie());
-        productResponseDTO.setDataProducao(product.getDataProducao());
-        productResponseDTO.setLote(product.getLote());
-        productResponseDTO.setResponsavel(product.getResponsavel());
+        productResponseDTO.setUniqueProductNumber(product.getUniqueProductNumber());
+        productResponseDTO.setSerialNumber(product.getSerialNumber());
+        productResponseDTO.setProductionDate(product.getProductionDate());
+        productResponseDTO.setBatchNumber(product.getBatchNumber());
+        productResponseDTO.setProducerName(product.getProducerName());
 
         return productResponseDTO;
     }

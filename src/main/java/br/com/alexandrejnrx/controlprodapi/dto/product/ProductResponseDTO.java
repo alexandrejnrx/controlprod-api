@@ -9,10 +9,10 @@ import java.time.LocalDate;
 @Setter
 public class ProductResponseDTO {
 
-    private Integer numeroUnicoProducao;
-    private Integer numeroSerie;
-    private LocalDate dataProducao;
-    private Integer lote;
-    private String responsavel;
+    private Integer uniqueProductNumber;
+    private Integer serialNumber;
+    private LocalDate productionDate;
+    private Integer batchNumber;
+    private String producerName;
 
 }
