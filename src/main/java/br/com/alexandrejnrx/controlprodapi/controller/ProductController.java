@@ -26,9 +26,8 @@ public class ProductController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ProductResponseDTO> buscar(@PathVariable Integer id) {
-        return productService.buscarPorId(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        ProductResponseDTO productResponseDTO = productService.buscarPorId(id);
+        return ResponseEntity.ok(productResponseDTO);
     }
 
     @PostMapping
