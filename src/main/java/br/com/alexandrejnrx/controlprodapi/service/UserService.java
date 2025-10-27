@@ -19,81 +19,81 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private static final String ERRO_NOME_USUARIO_JA_CADASTRADO = "Nome de usuário já cadastrado";
-    private static final String ERRO_EMAIL_JA_CADASTRADO = "E-mail já cadastrado";
+    private static final String ERROR_USERNAME_ALREADY_EXISTS = "Nome de usuário já cadastrado";
+    private static final String ERROR_EMAIL_ALREADY_EXISTS = "E-mail já cadastrado";
 
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
-    public List<UserResponseDTO> listarUsuarios() {
+    public List<UserResponseDTO> findAll() {
         return userRepository.findAll()
                 .stream().
-                map(UserConverter::converterEntidadeParaDTO)
+                map(UserConverter::converterEntityToDTO)
                 .collect(Collectors.toList());
     }
 
-    public UserResponseDTO buscarPorId(Integer id) {
+    public UserResponseDTO findById(Integer id) {
         return userRepository.findById(id)
-                .map(UserConverter::converterEntidadeParaDTO)
+                .map(UserConverter::converterEntityToDTO)
                 .orElseThrow(() -> new UserNotFoundException());
     }
 
-    public UserResponseDTO cadastrarUsuario(UserRequestDTO userRequestDTO) {
-        String nomeUsuarioNormalizado = normalizarDados(userRequestDTO.getUsername());
-        String emailNormalizado = normalizarDados(userRequestDTO.getEmail());
+    public UserResponseDTO create(UserRequestDTO userRequestDTO) {
+        String normalizedUsername = normalizeData(userRequestDTO.getUsername());
+        String normalizedEmail = normalizeData(userRequestDTO.getEmail());
 
-        if (userRepository.existsByUsername(nomeUsuarioNormalizado)) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, ERRO_NOME_USUARIO_JA_CADASTRADO);
+        if (userRepository.existsByUsername(normalizedUsername)) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, ERROR_USERNAME_ALREADY_EXISTS);
         }
 
-        if (userRepository.existsByEmail(emailNormalizado)) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, ERRO_EMAIL_JA_CADASTRADO);
+        if (userRepository.existsByEmail(normalizedEmail)) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, ERROR_EMAIL_ALREADY_EXISTS);
         }
 
-        User userParaCadastrar = UserConverter.converterDTOParaEntidade(userRequestDTO);
+        User userToSave = UserConverter.converterDTOToEntity(userRequestDTO);
 
-        userParaCadastrar.setUsername(nomeUsuarioNormalizado);
-        userParaCadastrar.setEmail(emailNormalizado);
-        userParaCadastrar.setPassword(passwordEncoder.encode(userRequestDTO.getPassword()));
+        userToSave.setUsername(normalizedUsername);
+        userToSave.setEmail(normalizedEmail);
+        userToSave.setPassword(passwordEncoder.encode(userRequestDTO.getPassword()));
 
-        User userSalvo = userRepository.save(userParaCadastrar);
-        return UserConverter.converterEntidadeParaDTO(userSalvo);
+        User savedUser = userRepository.save(userToSave);
+        return UserConverter.converterEntityToDTO(savedUser);
     }
 
-    public void deletarUsuario(Integer id) {
-        User userEncontrado = userRepository.findById(id)
+    public void delete(Integer id) {
+        User existingUser = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException());
 
-        userRepository.delete(userEncontrado);
+        userRepository.delete(existingUser);
     }
 
-    public UserResponseDTO alterarDados(Integer id, UserRequestDTO userRequestDTO) {
-        User userEncontrado = userRepository.findById(id)
+    public UserResponseDTO update(Integer id, UserRequestDTO userRequestDTO) {
+        User existingUser = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException());
 
         if (userRequestDTO.getName() != null) {
-            userEncontrado.setName(userRequestDTO.getName());
+            existingUser.setName(userRequestDTO.getName());
         }
 
         if (userRequestDTO.getUsername() != null) {
-            String nomeUsuarioNormalizado = normalizarDados(userRequestDTO.getUsername());
+            String normalizedUsername = normalizeData(userRequestDTO.getUsername());
 
-            if (!userEncontrado.getUsername().equals(nomeUsuarioNormalizado)) {
-                userEncontrado.setUsername(nomeUsuarioNormalizado);
+            if (!existingUser.getUsername().equals(normalizedUsername)) {
+                existingUser.setUsername(normalizedUsername);
             }
         }
 
         if (userRequestDTO.getPassword() != null) {
-            userEncontrado.setPassword(passwordEncoder.encode(userRequestDTO.getPassword()));
+            existingUser.setPassword(passwordEncoder.encode(userRequestDTO.getPassword()));
         }
 
-        User userAtualizado = userRepository.save(userEncontrado);
-        return UserConverter.converterEntidadeParaDTO(userAtualizado);
+        User updatedUser = userRepository.save(existingUser);
+        return UserConverter.converterEntityToDTO(updatedUser);
     }
 
-    private String normalizarDados(String dados) {
-        return dados.toLowerCase().trim();
+    private String normalizeData(String data) {
+        return data.toLowerCase().trim();
     }
 }

@@ -21,36 +21,36 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<UserResponseDTO>> listarUsuarios() {
-        return ResponseEntity.ok(userService.listarUsuarios());
+    public ResponseEntity<List<UserResponseDTO>> findAll() {
+        return ResponseEntity.ok(userService.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserResponseDTO> buscar(@PathVariable Integer id) {
-        UserResponseDTO userResponseDTO = userService.buscarPorId(id);
+    public ResponseEntity<UserResponseDTO> findById(@PathVariable Integer id) {
+        UserResponseDTO userResponseDTO = userService.findById(id);
 
         return ResponseEntity.ok(userResponseDTO);
     }
 
     @PostMapping
-    public ResponseEntity<UserResponseDTO> cadastrar(@Valid @RequestBody UserRequestDTO userRequestDTO) {
-        UserResponseDTO usuarioCriado = userService.cadastrarUsuario(userRequestDTO);
+    public ResponseEntity<UserResponseDTO> create(@Valid @RequestBody UserRequestDTO userRequestDTO) {
+        UserResponseDTO createdUser = userService.create(userRequestDTO);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioCriado);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable("id") Integer id) {
-        userService.deletarUsuario(id);
+    public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
+        userService.delete(id);
 
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserResponseDTO> atualizar(@PathVariable("id") Integer id, @RequestBody UserRequestDTO userRequestDTO) {
-        UserResponseDTO usuarioAtualizado = userService.alterarDados(id, userRequestDTO);
-        userService.alterarDados(id, userRequestDTO);
+    public ResponseEntity<UserResponseDTO> update(@PathVariable("id") Integer id, @RequestBody UserRequestDTO userRequestDTO) {
+        UserResponseDTO updatedUser = userService.update(id, userRequestDTO);
+        userService.update(id, userRequestDTO);
 
-        return ResponseEntity.status(HttpStatus.OK).body(usuarioAtualizado);
+        return ResponseEntity.status(HttpStatus.OK).body(updatedUser);
     }
 }

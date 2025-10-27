@@ -6,7 +6,7 @@ import br.com.alexandrejnrx.controlprodapi.model.User;
 
 public class UserConverter {
 
-    public static User converterDTOParaEntidade(UserRequestDTO userRequestDTO) {
+    public static User converterDTOToEntity(UserRequestDTO userRequestDTO) {
         User user = new User();
 
         user.setName(userRequestDTO.getName());
@@ -18,7 +18,7 @@ public class UserConverter {
         return user;
     }
 
-    public static UserResponseDTO converterEntidadeParaDTO(User user) {
+    public static UserResponseDTO converterEntityToDTO(User user) {
         UserResponseDTO userResponseDTO = new UserResponseDTO();
 
         userResponseDTO.setName(user.getName());
