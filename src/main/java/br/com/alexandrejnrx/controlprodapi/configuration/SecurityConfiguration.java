@@ -36,6 +36,7 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.GET, "/products").authenticated()
                         .requestMatchers(HttpMethod.GET, "/products/**").authenticated()
                         .requestMatchers(HttpMethod.POST, "/products").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/products").authenticated()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
