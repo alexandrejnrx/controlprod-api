@@ -46,4 +46,33 @@ public class ProductService {
 
         productRepository.deleteById(id);
     }
+
+    public ProductResponseDTO update(Integer id, ProductRequestDTO productRequestDTO) {
+        Product existingProduct = productRepository.findById(id)
+                .orElseThrow(() -> new ProductNotFoundException());
+
+        if (productRequestDTO.getUniqueProductNumber() != null) {
+            existingProduct.setUniqueProductNumber(productRequestDTO.getUniqueProductNumber());
+        }
+
+        if (productRequestDTO.getSerialNumber() != null) {
+            existingProduct.setSerialNumber(productRequestDTO.getSerialNumber());
+        }
+
+        if (productRequestDTO.getProductionDate() != null) {
+            existingProduct.setProductionDate(productRequestDTO.getProductionDate());
+        }
+
+        if (productRequestDTO.getBatchNumber() != null) {
+            existingProduct.setBatchNumber(productRequestDTO.getBatchNumber());
+        }
+
+        if (productRequestDTO.getProducerName() != null) {
+            existingProduct.setProducerName(productRequestDTO.getProducerName());
+        }
+
+        Product updatedProduct = productRepository.save(existingProduct);
+
+        return ProductConverter.converterEntidadeParaDTO(updatedProduct);
+    }
 }
