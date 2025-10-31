@@ -1,10 +1,9 @@
 package br.com.alexandrejnrx.controlprodapi.controller;
 
-import br.com.alexandrejnrx.controlprodapi.configuration.TokenService;
 import br.com.alexandrejnrx.controlprodapi.dto.auth.AuthDTO;
 import br.com.alexandrejnrx.controlprodapi.dto.auth.LoginResponseDTO;
 import br.com.alexandrejnrx.controlprodapi.model.User;
-import org.springframework.beans.factory.annotation.Autowired;
+import br.com.alexandrejnrx.controlprodapi.service.TokenService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,11 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;
-    @Autowired
-    private TokenService tokenService;
 
-    public AuthController(AuthenticationManager authenticationManager) {
+    private final TokenService tokenService;
+
+    public AuthController(AuthenticationManager authenticationManager, TokenService tokenService) {
         this.authenticationManager = authenticationManager;
+        this.tokenService = tokenService;
     }
 
     @PostMapping("/login")
