@@ -1,7 +1,8 @@
 package br.com.alexandrejnrx.controlprodapi.controller;
 
-import br.com.alexandrejnrx.controlprodapi.dto.usuario.UserRequestDTO;
-import br.com.alexandrejnrx.controlprodapi.dto.usuario.UserResponseDTO;
+import br.com.alexandrejnrx.controlprodapi.dto.user.UpdateNameDTO;
+import br.com.alexandrejnrx.controlprodapi.dto.user.UserCreateRequestDTO;
+import br.com.alexandrejnrx.controlprodapi.dto.user.UserResponseDTO;
 import br.com.alexandrejnrx.controlprodapi.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -33,8 +34,8 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserResponseDTO> create(@Valid @RequestBody UserRequestDTO userRequestDTO) {
-        UserResponseDTO createdUser = userService.create(userRequestDTO);
+    public ResponseEntity<UserResponseDTO> create(@Valid @RequestBody UserCreateRequestDTO userCreateRequestDTO) {
+        UserResponseDTO createdUser = userService.create(userCreateRequestDTO);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
     }
@@ -46,11 +47,11 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<UserResponseDTO> update(@PathVariable("id") Integer id, @RequestBody UserRequestDTO userRequestDTO) {
-        UserResponseDTO updatedUser = userService.update(id, userRequestDTO);
-        userService.update(id, userRequestDTO);
+    @PatchMapping("/{id}/name")
+    public ResponseEntity<UserResponseDTO> updateName(@PathVariable("id") Integer id, @RequestBody UpdateNameDTO dto) {
+        UserResponseDTO updateName = userService.updateName(id, dto);
 
-        return ResponseEntity.status(HttpStatus.OK).body(updatedUser);
+        return ResponseEntity.status(HttpStatus.OK).body(updateName);
     }
+
 }

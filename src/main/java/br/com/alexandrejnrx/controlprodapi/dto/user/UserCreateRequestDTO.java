@@ -1,4 +1,4 @@
-package br.com.alexandrejnrx.controlprodapi.dto.usuario;
+package br.com.alexandrejnrx.controlprodapi.dto.user;
 
 import br.com.alexandrejnrx.controlprodapi.model.Role;
 import jakarta.validation.constraints.NotBlank;
@@ -8,7 +8,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UserRequestDTO {
+public class UserCreateRequestDTO {
 
     @NotBlank(message = "O campo nome não pode ser vazio.")
     private String name;
