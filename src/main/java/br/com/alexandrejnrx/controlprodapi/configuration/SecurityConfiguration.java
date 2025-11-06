@@ -40,7 +40,8 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.POST, "/products").authenticated()
                         .requestMatchers(HttpMethod.DELETE, "/products").authenticated()
                         .requestMatchers(HttpMethod.PUT, "/products/**").authenticated()
-
+                        .requestMatchers(HttpMethod.GET, "/clients").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/clients").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
