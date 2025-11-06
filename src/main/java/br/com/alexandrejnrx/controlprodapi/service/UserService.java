@@ -1,6 +1,7 @@
 package br.com.alexandrejnrx.controlprodapi.service;
 
 import br.com.alexandrejnrx.controlprodapi.dto.converter.UserMapper;
+import br.com.alexandrejnrx.controlprodapi.dto.user.ChangeUsernameDTO;
 import br.com.alexandrejnrx.controlprodapi.dto.user.UpdateNameDTO;
 import br.com.alexandrejnrx.controlprodapi.dto.user.UserCreateRequestDTO;
 import br.com.alexandrejnrx.controlprodapi.dto.user.UserResponseDTO;
@@ -81,6 +82,25 @@ public class UserService {
         }
 
         userRepository.save(existingUser);
+        return userMapper.toResponseDTO(existingUser);
+    }
+
+    public UserResponseDTO changeUsername(Integer id, ChangeUsernameDTO dto) {
+        User existingUser = userRepository.findById(id)
+                .orElseThrow(UserNotFoundException::new);
+
+        String normalizedUsername = normalizeData(dto.getUsername());
+        if (userRepository.existsByUsername(normalizedUsername)) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, ERROR_USERNAME_ALREADY_EXISTS);
+        }
+
+        if (!passwordEncoder.matches(dto.getPassword(), existingUser.getPassword())) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Senha incorreta!");
+        }
+
+        existingUser.setUsername(normalizedUsername);
+        userRepository.save(existingUser);
+
         return userMapper.toResponseDTO(existingUser);
     }
 

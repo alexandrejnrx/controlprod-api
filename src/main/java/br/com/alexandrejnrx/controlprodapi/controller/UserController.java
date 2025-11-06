@@ -1,5 +1,6 @@
 package br.com.alexandrejnrx.controlprodapi.controller;
 
+import br.com.alexandrejnrx.controlprodapi.dto.user.ChangeUsernameDTO;
 import br.com.alexandrejnrx.controlprodapi.dto.user.UpdateNameDTO;
 import br.com.alexandrejnrx.controlprodapi.dto.user.UserCreateRequestDTO;
 import br.com.alexandrejnrx.controlprodapi.dto.user.UserResponseDTO;
@@ -23,6 +24,7 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<List<UserResponseDTO>> findAll() {
+
         return ResponseEntity.ok(userService.findAll());
     }
 
@@ -54,4 +56,10 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(updateName);
     }
 
+    @PatchMapping("/{id}/username")
+    public ResponseEntity<UserResponseDTO> updateUsername(@PathVariable("id") Integer id, @Valid @RequestBody ChangeUsernameDTO dto) {
+        UserResponseDTO updateUsername = userService.changeUsername(id, dto);
+
+        return ResponseEntity.status(HttpStatus.OK).body(updateUsername);
+    }
 }
