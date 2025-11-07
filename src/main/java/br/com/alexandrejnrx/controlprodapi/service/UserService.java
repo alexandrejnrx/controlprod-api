@@ -77,8 +77,8 @@ public class UserService {
         User existingUser = userRepository.findById(id)
                 .orElseThrow(UserNotFoundException::new);
 
-        if (dto.getName() != null) {
-            existingUser.setName(dto.getName());
+        if (dto.newName() != null) {
+            existingUser.setName(dto.newName());
         }
 
         userRepository.save(existingUser);
@@ -89,12 +89,12 @@ public class UserService {
         User existingUser = userRepository.findById(id)
                 .orElseThrow(UserNotFoundException::new);
 
-        String normalizedUsername = normalizeData(dto.getUsername());
+        String normalizedUsername = normalizeData(dto.newUsername());
         if (userRepository.existsByUsername(normalizedUsername)) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, ERROR_USERNAME_ALREADY_EXISTS);
         }
 
-        if (!passwordEncoder.matches(dto.getPassword(), existingUser.getPassword())) {
+        if (!passwordEncoder.matches(dto.password(), existingUser.getPassword())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Senha incorreta!");
         }
 
