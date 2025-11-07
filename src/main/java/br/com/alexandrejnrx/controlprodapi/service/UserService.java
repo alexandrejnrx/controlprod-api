@@ -66,16 +66,14 @@ public class UserService {
         return userMapper.toResponseDTO(savedUser);
     }
 
-    public void delete(Integer id) {
-        User existingUser = userRepository.findById(id)
-                .orElseThrow(UserNotFoundException::new);
+    public void deleteById(Integer id) {
+        User existingUser = findUserById(id);
 
         userRepository.delete(existingUser);
     }
 
     public UserResponseDTO updateName(Integer id, UpdateNameDTO dto) {
-        User existingUser = userRepository.findById(id)
-                .orElseThrow(UserNotFoundException::new);
+        User existingUser = findUserById(id);
 
         if (dto.newName() != null) {
             existingUser.setName(dto.newName());
@@ -86,8 +84,7 @@ public class UserService {
     }
 
     public UserResponseDTO changeUsername(Integer id, ChangeUsernameDTO dto) {
-        User existingUser = userRepository.findById(id)
-                .orElseThrow(UserNotFoundException::new);
+        User existingUser = findUserById(id);
 
         String normalizedUsername = normalizeData(dto.newUsername());
         if (userRepository.existsByUsername(normalizedUsername)) {
@@ -102,6 +99,11 @@ public class UserService {
         userRepository.save(existingUser);
 
         return userMapper.toResponseDTO(existingUser);
+    }
+
+    private User findUserById(Integer id) {
+        return userRepository.findById(id)
+                .orElseThrow(UserNotFoundException::new);
     }
 
     private String normalizeData(String data) {

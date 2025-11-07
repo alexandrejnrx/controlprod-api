@@ -44,20 +44,20 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
-        userService.delete(id);
+        userService.deleteById(id);
 
         return ResponseEntity.noContent().build();
     }
 
     @PatchMapping("/{id}/name")
-    public ResponseEntity<UserResponseDTO> updateName(@PathVariable("id") Integer id, @RequestBody UpdateNameDTO dto) {
+    public ResponseEntity<UserResponseDTO> updateName(@PathVariable Integer id, @Valid @RequestBody UpdateNameDTO dto) {
         UserResponseDTO updatedUser = userService.updateName(id, dto);
 
         return ResponseEntity.ok(updatedUser);
     }
 
     @PatchMapping("/{id}/username")
-    public ResponseEntity<UserResponseDTO> changeUsername(@PathVariable("id") Integer id, @Valid @RequestBody ChangeUsernameDTO dto) {
+    public ResponseEntity<UserResponseDTO> changeUsername(@PathVariable Integer id, @Valid @RequestBody ChangeUsernameDTO dto) {
         UserResponseDTO updatedUser = userService.changeUsername(id, dto);
 
         return ResponseEntity.ok(updatedUser);
