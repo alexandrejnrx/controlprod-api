@@ -2,7 +2,6 @@ package br.com.alexandrejnrx.controlprodapi.service;
 
 import br.com.alexandrejnrx.controlprodapi.dto.converter.UserMapper;
 import br.com.alexandrejnrx.controlprodapi.dto.user.ChangeUsernameDTO;
-import br.com.alexandrejnrx.controlprodapi.dto.user.UpdateNameDTO;
 import br.com.alexandrejnrx.controlprodapi.dto.user.UserCreateRequestDTO;
 import br.com.alexandrejnrx.controlprodapi.dto.user.UserResponseDTO;
 import br.com.alexandrejnrx.controlprodapi.exception.UserNotFoundException;
@@ -44,26 +43,19 @@ public class UserService {
                 .orElseThrow(UserNotFoundException::new);
     }
 
-    public UserResponseDTO create(UserCreateRequestDTO dto) {
-        String normalizedUsername = normalizeData(dto.getUsername());
-        String normalizedEmail = normalizeData(dto.getEmail());
-
-        if (userRepository.existsByUsername(normalizedUsername)) {
+    public void create(UserCreateRequestDTO newUser) {
+        if (userRepository.existsByUsername(newUser.getUsername())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, ERROR_USERNAME_ALREADY_EXISTS);
         }
 
-        if (userRepository.existsByEmail(normalizedEmail)) {
+        if (userRepository.existsByEmail(newUser.getEmail())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, ERROR_EMAIL_ALREADY_EXISTS);
         }
 
-        User userToSave = userMapper.toEntity(dto);
+        User userToSave = userMapper.toEntity(newUser);
+        userToSave.setPassword(passwordEncoder.encode(newUser.getPassword()));
 
-        userToSave.setUsername(normalizedUsername);
-        userToSave.setEmail(normalizedEmail);
-        userToSave.setPassword(passwordEncoder.encode(dto.getPassword()));
-
-        User savedUser = userRepository.save(userToSave);
-        return userMapper.toResponseDTO(savedUser);
+        userRepository.save(userToSave);
     }
 
     public void deleteById(Integer id) {
@@ -72,41 +64,33 @@ public class UserService {
         userRepository.delete(existingUser);
     }
 
-    public UserResponseDTO updateName(Integer id, UpdateNameDTO dto) {
+    public void updateName(Integer id, String newName) {
         User existingUser = findUserById(id);
 
-        if (dto.newName() != null) {
-            existingUser.setName(dto.newName());
+        if (newName != null) {
+            existingUser.setName(newName);
         }
 
         userRepository.save(existingUser);
-        return userMapper.toResponseDTO(existingUser);
     }
 
-    public UserResponseDTO changeUsername(Integer id, ChangeUsernameDTO dto) {
+    public void changeUsername(Integer id, ChangeUsernameDTO dto) {
         User existingUser = findUserById(id);
 
-        String normalizedUsername = normalizeData(dto.newUsername());
-        if (userRepository.existsByUsername(normalizedUsername)) {
+        if (userRepository.existsByUsername(dto.getNewUsername().toLowerCase().trim())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, ERROR_USERNAME_ALREADY_EXISTS);
         }
 
-        if (!passwordEncoder.matches(dto.password(), existingUser.getPassword())) {
+        if (!passwordEncoder.matches(dto.getPassword(), existingUser.getPassword())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Senha incorreta!");
         }
 
-        existingUser.setUsername(normalizedUsername);
+        existingUser.setUsername(dto.getNewUsername().toLowerCase().trim());
         userRepository.save(existingUser);
-
-        return userMapper.toResponseDTO(existingUser);
     }
 
     private User findUserById(Integer id) {
         return userRepository.findById(id)
                 .orElseThrow(UserNotFoundException::new);
-    }
-
-    private String normalizeData(String data) {
-        return data.toLowerCase().trim();
     }
 }

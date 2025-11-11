@@ -21,4 +21,11 @@ public class UserCreateRequestDTO {
     @NotNull(message = "O perfil é obrigatório")
     private Role role;
 
+    public void setUsername(String username) {
+        this.username = username.toLowerCase().trim();
+    }
+
+    public void setEmail(String email) {
+        this.email = email.toLowerCase().trim();
+    }
 }

@@ -37,9 +37,9 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<UserResponseDTO> create(@Valid @RequestBody UserCreateRequestDTO userCreateRequestDTO) {
-        UserResponseDTO createdUser = userService.create(userCreateRequestDTO);
+        userService.create(userCreateRequestDTO);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @DeleteMapping("/{id}")
@@ -51,14 +51,16 @@ public class UserController {
 
     @PatchMapping("/{id}/name")
     public ResponseEntity<UserResponseDTO> updateName(@PathVariable Integer id, @Valid @RequestBody UpdateNameDTO dto) {
-        UserResponseDTO updatedUser = userService.updateName(id, dto);
+        userService.updateName(id, dto.newName());
+        UserResponseDTO updatedUser = userService.findById(id);
 
         return ResponseEntity.ok(updatedUser);
     }
 
     @PatchMapping("/{id}/username")
     public ResponseEntity<UserResponseDTO> changeUsername(@PathVariable Integer id, @Valid @RequestBody ChangeUsernameDTO dto) {
-        UserResponseDTO updatedUser = userService.changeUsername(id, dto);
+        userService.changeUsername(id, dto);
+        UserResponseDTO updatedUser = userService.findById(id);
 
         return ResponseEntity.ok(updatedUser);
     }
