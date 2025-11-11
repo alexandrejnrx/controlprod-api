@@ -8,7 +8,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UserCreateRequestDTO {
+public class CreateDTO {
 
     @NotBlank(message = "O campo nome não pode ser vazio.")
     private String name;

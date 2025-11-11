@@ -1,6 +1,6 @@
 package br.com.alexandrejnrx.controlprodapi.dto.converter;
 
-import br.com.alexandrejnrx.controlprodapi.dto.user.UserCreateRequestDTO;
+import br.com.alexandrejnrx.controlprodapi.dto.user.CreateDTO;
 import br.com.alexandrejnrx.controlprodapi.dto.user.UserResponseDTO;
 import br.com.alexandrejnrx.controlprodapi.model.User;
 import org.springframework.stereotype.Component;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserMapper {
 
-    public User toEntity(UserCreateRequestDTO dto) {
+    public User toEntity(CreateDTO dto) {
         User user = new User();
 
         user.setName(dto.getName());

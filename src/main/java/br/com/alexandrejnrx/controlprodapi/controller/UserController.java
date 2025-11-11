@@ -2,7 +2,7 @@ package br.com.alexandrejnrx.controlprodapi.controller;
 
 import br.com.alexandrejnrx.controlprodapi.dto.user.ChangeUsernameDTO;
 import br.com.alexandrejnrx.controlprodapi.dto.user.UpdateNameDTO;
-import br.com.alexandrejnrx.controlprodapi.dto.user.UserCreateRequestDTO;
+import br.com.alexandrejnrx.controlprodapi.dto.user.CreateDTO;
 import br.com.alexandrejnrx.controlprodapi.dto.user.UserResponseDTO;
 import br.com.alexandrejnrx.controlprodapi.service.UserService;
 import jakarta.validation.Valid;
@@ -36,8 +36,8 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserResponseDTO> create(@Valid @RequestBody UserCreateRequestDTO userCreateRequestDTO) {
-        userService.create(userCreateRequestDTO);
+    public ResponseEntity<UserResponseDTO> create(@Valid @RequestBody CreateDTO createDTO) {
+        userService.create(createDTO);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

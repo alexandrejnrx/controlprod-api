@@ -2,7 +2,7 @@ package br.com.alexandrejnrx.controlprodapi.service;
 
 import br.com.alexandrejnrx.controlprodapi.dto.converter.UserMapper;
 import br.com.alexandrejnrx.controlprodapi.dto.user.ChangeUsernameDTO;
-import br.com.alexandrejnrx.controlprodapi.dto.user.UserCreateRequestDTO;
+import br.com.alexandrejnrx.controlprodapi.dto.user.CreateDTO;
 import br.com.alexandrejnrx.controlprodapi.dto.user.UserResponseDTO;
 import br.com.alexandrejnrx.controlprodapi.exception.UserNotFoundException;
 import br.com.alexandrejnrx.controlprodapi.model.User;
@@ -43,7 +43,7 @@ public class UserService {
                 .orElseThrow(UserNotFoundException::new);
     }
 
-    public void create(UserCreateRequestDTO newUser) {
+    public void create(CreateDTO newUser) {
         if (userRepository.existsByUsername(newUser.getUsername())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, ERROR_USERNAME_ALREADY_EXISTS);
         }
