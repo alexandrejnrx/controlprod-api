@@ -1,6 +1,6 @@
 package br.com.alexandrejnrx.controlprodapi.service;
 
-import br.com.alexandrejnrx.controlprodapi.dto.converter.ProductConverter;
+import br.com.alexandrejnrx.controlprodapi.dto.mapper.ProductConverter;
 import br.com.alexandrejnrx.controlprodapi.dto.product.ProductRequestDTO;
 import br.com.alexandrejnrx.controlprodapi.dto.product.ProductResponseDTO;
 import br.com.alexandrejnrx.controlprodapi.exception.ProductNotFoundException;

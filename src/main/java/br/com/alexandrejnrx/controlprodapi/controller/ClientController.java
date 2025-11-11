@@ -1,10 +1,12 @@
 package br.com.alexandrejnrx.controlprodapi.controller;
 
-import br.com.alexandrejnrx.controlprodapi.model.Client;
+import br.com.alexandrejnrx.controlprodapi.dto.client.ClientCreateRequestDTO;
+import br.com.alexandrejnrx.controlprodapi.dto.client.ClientResponseDTO;
 import br.com.alexandrejnrx.controlprodapi.service.ClientService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,9 +21,15 @@ public class ClientController {
     }
 
     @GetMapping
-    public List<Client> findAll() {
-        return clientService.findAll();
+    public ResponseEntity<List<ClientResponseDTO>> findAll() {
+
+        return ResponseEntity.ok(clientService.findAll());
     }
 
+    @PostMapping
+    public ResponseEntity<ClientResponseDTO> create(@Valid @RequestBody ClientCreateRequestDTO clientCreateRequestDTO) {
+        clientService.create(clientCreateRequestDTO);
 
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
 }

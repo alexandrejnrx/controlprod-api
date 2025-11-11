@@ -1,4 +1,4 @@
-package br.com.alexandrejnrx.controlprodapi.dto.converter;
+package br.com.alexandrejnrx.controlprodapi.dto.mapper;
 
 import br.com.alexandrejnrx.controlprodapi.dto.product.ProductRequestDTO;
 import br.com.alexandrejnrx.controlprodapi.dto.product.ProductResponseDTO;
