@@ -31,6 +31,16 @@ public class ProductTypeService {
         productTypeRepository.delete(productTypeToDelete);
     }
 
+    public void updateName(Integer id, String newName) {
+        ProductType productTypeToUpdate = findById(id);
+
+        if (newName != null) {
+            productTypeToUpdate.setName(newName);
+        }
+
+        productTypeRepository.save(productTypeToUpdate);
+    }
+
     private ProductType findById(Integer id) {
         return productTypeRepository.findById(id)
                 .orElseThrow(ProductTypeNotFoundException::new);
