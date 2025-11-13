@@ -20,5 +20,4 @@ public class Project {
     private Client client;
     @Column(nullable = false)
     private Boolean active;
-
 }
