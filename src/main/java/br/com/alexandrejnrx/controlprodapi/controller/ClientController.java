@@ -32,4 +32,11 @@ public class ClientController {
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ClientResponseDTO> delete(@PathVariable Integer id) {
+        clientService.delete(id);
+
+        return ResponseEntity.noContent().build();
+    }
 }
