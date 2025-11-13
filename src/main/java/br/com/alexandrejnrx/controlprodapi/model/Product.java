@@ -18,8 +18,8 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "product_type_id", nullable = false)
     private ProductType productType;
-    @Column(name = "unique_product_number", nullable = false, unique = true)
-    private Integer uniqueProductNumber;
+    @Column(nullable = false, unique = true)
+    private Integer nup;
     @Column(name = "serial_number", unique = true)
     private Integer serialNumber;
     @Column(length = 20)

@@ -51,8 +51,8 @@ public class ProductService {
         Product existingProduct = productRepository.findById(id)
                 .orElseThrow(() -> new ProductNotFoundException());
 
-        if (productRequestDTO.getUniqueProductNumber() != null) {
-            existingProduct.setUniqueProductNumber(productRequestDTO.getUniqueProductNumber());
+        if (productRequestDTO.getNup() != null) {
+            existingProduct.setNup(productRequestDTO.getNup());
         }
 
         if (productRequestDTO.getSerialNumber() != null) {

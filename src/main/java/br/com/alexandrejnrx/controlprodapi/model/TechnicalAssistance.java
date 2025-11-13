@@ -31,5 +31,4 @@ public class TechnicalAssistance {
     private String responsible;
     @Column(length = 1000)
     private String resolution;
-
 }

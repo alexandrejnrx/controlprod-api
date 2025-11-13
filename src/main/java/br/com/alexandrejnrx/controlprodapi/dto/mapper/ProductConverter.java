@@ -10,7 +10,7 @@ public class ProductConverter {
         Product product = new Product();
 
         product.setProductType(productRequestDTO.getProductType());
-        product.setUniqueProductNumber(productRequestDTO.getUniqueProductNumber());
+        product.setNup(productRequestDTO.getNup());
         product.setSerialNumber(productRequestDTO.getSerialNumber());
         product.setModem(productRequestDTO.getModem());
         product.setImei(productRequestDTO.getImei());
@@ -27,7 +27,7 @@ public class ProductConverter {
 
         productResponseDTO.setId(product.getId());
         productResponseDTO.setProductType(product.getProductType());
-        productResponseDTO.setUniqueProductNumber(product.getUniqueProductNumber());
+        productResponseDTO.setUniqueProductNumber(product.getNup());
         productResponseDTO.setSerialNumber(product.getSerialNumber());
         productResponseDTO.setModem(product.getModem());
         productResponseDTO.setImei(product.getImei());

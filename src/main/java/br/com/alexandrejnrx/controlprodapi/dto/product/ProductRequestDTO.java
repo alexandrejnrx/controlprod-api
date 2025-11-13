@@ -11,7 +11,7 @@ import java.time.LocalDate;
 public class ProductRequestDTO {
 
     private ProductType productType;
-    private Integer uniqueProductNumber;
+    private Integer nup;
     private Integer serialNumber;
     private String modem;
     private String imei;
