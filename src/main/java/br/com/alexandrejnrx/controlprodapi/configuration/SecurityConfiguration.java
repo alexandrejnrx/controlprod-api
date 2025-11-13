@@ -45,8 +45,9 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.GET, "/projects").authenticated()
                         .requestMatchers(HttpMethod.POST, "/projects").authenticated()
 
-                        .requestMatchers(HttpMethod.GET, "/productType").authenticated()
-                        .requestMatchers(HttpMethod.POST, "/productType").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/product-types").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/product-types").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/product-types/**").authenticated()
 
                         .requestMatchers(HttpMethod.GET, "/products").authenticated()
                         .requestMatchers(HttpMethod.GET, "/products/**").authenticated()

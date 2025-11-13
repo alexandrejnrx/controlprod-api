@@ -1,5 +1,6 @@
 package br.com.alexandrejnrx.controlprodapi.service;
 
+import br.com.alexandrejnrx.controlprodapi.exception.ProductTypeNotFoundException;
 import br.com.alexandrejnrx.controlprodapi.model.ProductType;
 import br.com.alexandrejnrx.controlprodapi.repository.ProductTypeRepository;
 import org.springframework.stereotype.Service;
@@ -22,5 +23,16 @@ public class ProductTypeService {
 
     public void create(ProductType productType) {
         productTypeRepository.save(productType);
+    }
+
+    public void delete(Integer id) {
+        ProductType productTypeToDelete = findById(id);
+
+        productTypeRepository.delete(productTypeToDelete);
+    }
+
+    private ProductType findById(Integer id) {
+        return productTypeRepository.findById(id)
+                .orElseThrow(ProductTypeNotFoundException::new);
     }
 }
