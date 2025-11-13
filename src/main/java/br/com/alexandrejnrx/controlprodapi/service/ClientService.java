@@ -41,6 +41,16 @@ public class ClientService {
         clientRepository.delete(clientToDelete);
     }
 
+    public void updateName(Integer id, String newName) {
+        Client clientToUpdate = findById(id);
+
+        if (newName != null) {
+            clientToUpdate.setName(newName);
+        }
+
+        clientRepository.save(clientToUpdate);
+    }
+
     private Client findById(Integer id) {
         return clientRepository.findById(id)
                 .orElseThrow(ClientNotFoundException::new);
