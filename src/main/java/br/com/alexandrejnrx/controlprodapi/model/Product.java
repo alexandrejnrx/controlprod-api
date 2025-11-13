@@ -34,5 +34,4 @@ public class Product {
     private Integer batchNumber;
     @Column(name = "producer_name", nullable = false, length = 100)
     private String producerName;
-
 }
