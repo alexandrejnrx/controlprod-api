@@ -2,6 +2,7 @@ package br.com.alexandrejnrx.controlprodapi.service;
 
 import br.com.alexandrejnrx.controlprodapi.exception.ProductTypeNotFoundException;
 import br.com.alexandrejnrx.controlprodapi.model.ProductType;
+import br.com.alexandrejnrx.controlprodapi.model.Project;
 import br.com.alexandrejnrx.controlprodapi.repository.ProductTypeRepository;
 import org.springframework.stereotype.Service;
 
@@ -46,6 +47,16 @@ public class ProductTypeService {
 
         if (newInternalCode != null) {
             productTypeToUpdate.setInternalCode(newInternalCode);
+        }
+
+        productTypeRepository.save(productTypeToUpdate);
+    }
+
+    public void updateProject(Integer id, Project newProject) {
+        ProductType productTypeToUpdate = findById(id);
+
+        if (newProject != null) {
+            productTypeToUpdate.setProject(newProject);
         }
 
         productTypeRepository.save(productTypeToUpdate);
