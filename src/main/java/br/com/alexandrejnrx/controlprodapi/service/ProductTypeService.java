@@ -41,6 +41,16 @@ public class ProductTypeService {
         productTypeRepository.save(productTypeToUpdate);
     }
 
+    public void updateInternalCode(Integer id, String newInternalCode) {
+        ProductType productTypeToUpdate = findById(id);
+
+        if (newInternalCode != null) {
+            productTypeToUpdate.setInternalCode(newInternalCode);
+        }
+
+        productTypeRepository.save(productTypeToUpdate);
+    }
+
     private ProductType findById(Integer id) {
         return productTypeRepository.findById(id)
                 .orElseThrow(ProductTypeNotFoundException::new);

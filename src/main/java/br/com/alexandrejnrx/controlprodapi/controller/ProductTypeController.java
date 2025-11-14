@@ -1,9 +1,9 @@
 package br.com.alexandrejnrx.controlprodapi.controller;
 
+import br.com.alexandrejnrx.controlprodapi.dto.productType.UpdateInternalCodeDTO;
 import br.com.alexandrejnrx.controlprodapi.dto.productType.UpdateNameDTO;
 import br.com.alexandrejnrx.controlprodapi.model.ProductType;
 import br.com.alexandrejnrx.controlprodapi.service.ProductTypeService;
-import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,10 +39,17 @@ public class ProductTypeController {
 
         return ResponseEntity.noContent().build();
     }
-
+ 
     @PatchMapping("/{id}/name")
     public ResponseEntity<Void> updateName(@PathVariable Integer id, @RequestBody UpdateNameDTO dto) {
         productTypeService.updateName(id, dto.newName());
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}/internal-code")
+    public ResponseEntity<Void> updateInternalCode(@PathVariable Integer id, @RequestBody UpdateInternalCodeDTO dto) {
+        productTypeService.updateInternalCode(id, dto.newInternalCode());
 
         return ResponseEntity.noContent().build();
     }
