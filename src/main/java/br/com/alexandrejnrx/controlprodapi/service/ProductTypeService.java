@@ -62,6 +62,16 @@ public class ProductTypeService {
         productTypeRepository.save(productTypeToUpdate);
     }
 
+    public void updateActive(Integer id, Boolean newActive) {
+        ProductType productTypeToUpdate = findById(id);
+
+        if (newActive != null) {
+            productTypeToUpdate.setActive(newActive);
+        }
+
+        productTypeRepository.save(productTypeToUpdate);
+    }
+
     private ProductType findById(Integer id) {
         return productTypeRepository.findById(id)
                 .orElseThrow(ProductTypeNotFoundException::new);

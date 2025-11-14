@@ -1,5 +1,6 @@
 package br.com.alexandrejnrx.controlprodapi.controller;
 
+import br.com.alexandrejnrx.controlprodapi.dto.productType.UpdateActiveDTO;
 import br.com.alexandrejnrx.controlprodapi.dto.productType.UpdateProjectDTO;
 import br.com.alexandrejnrx.controlprodapi.dto.productType.UpdateInternalCodeDTO;
 import br.com.alexandrejnrx.controlprodapi.dto.productType.UpdateNameDTO;
@@ -58,6 +59,13 @@ public class ProductTypeController {
     @PatchMapping("/{id}/project")
     public ResponseEntity<Void> updateProject(@PathVariable Integer id, @RequestBody UpdateProjectDTO dto) {
         productTypeService.updateProject(id, dto.newProject());
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}/active")
+    public ResponseEntity<Void> updateActive(@PathVariable Integer id, @RequestBody UpdateActiveDTO dto) {
+        productTypeService.updateActive(id, dto.newActive());
 
         return ResponseEntity.noContent().build();
     }
