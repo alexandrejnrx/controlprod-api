@@ -30,6 +30,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 
+    @ExceptionHandler(UserEmailAlreadyRegisteredException.class)
     private ResponseEntity<String> handleUserEmailAlreadyRegisteredException(UserEmailAlreadyRegisteredException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
