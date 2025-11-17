@@ -1,4 +1,9 @@
 package br.com.alexandrejnrx.controlprodapi.dto.client;
 
-public record UpdateActiveDTO(Boolean newActive) {
+import jakarta.validation.constraints.NotNull;
+
+public record UpdateActiveDTO(
+        @NotNull
+        Boolean newActive
+) {
 }

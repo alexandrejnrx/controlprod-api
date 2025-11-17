@@ -1,21 +1,18 @@
 package br.com.alexandrejnrx.controlprodapi.dto.client;
 
 import br.com.alexandrejnrx.controlprodapi.model.ClientType;
-import jakarta.persistence.Column;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
 public class ClientCreateRequestDTO {
-
-    @Column(nullable = false, length = 50)
+    @NotBlank(message = "O campo nome não pode ser vazio!")
     private String name;
-    @Enumerated(EnumType.STRING)
-    @Column(name = "client_type", nullable = false, length = 10)
+    @NotNull(message = "O tipo do cliente é obrigatório!")
     private ClientType clientType;
-    @Column(nullable = false)
+    @NotNull(message = "O campo active é obrigatório!")
     private Boolean active;
 }

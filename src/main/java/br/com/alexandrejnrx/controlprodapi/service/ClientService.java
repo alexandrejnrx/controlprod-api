@@ -45,30 +45,21 @@ public class ClientService {
     public void updateName(Integer id, String newName) {
         Client clientToUpdate = findById(id);
 
-        if (newName != null) {
-            clientToUpdate.setName(newName);
-        }
-
+        clientToUpdate.setName(newName);
         clientRepository.save(clientToUpdate);
     }
 
     public void updateClientType(Integer id, ClientType newClientType) {
         Client clientToUpdate = findById(id);
 
-        if (newClientType != null) {
-            clientToUpdate.setClientType(newClientType);
-        }
-
+        clientToUpdate.setClientType(newClientType);
         clientRepository.save(clientToUpdate);
     }
 
     public void updateActive(Integer id, Boolean newActive) {
         Client clientToUpdate = findById(id);
 
-        if (newActive != null) {
-            clientToUpdate.setActive(newActive);
-        }
-
+        clientToUpdate.setActive(newActive);
         clientRepository.save(clientToUpdate);
     }
 
