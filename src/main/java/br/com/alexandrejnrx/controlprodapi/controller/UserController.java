@@ -26,35 +26,51 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> create(@Valid @RequestBody UserCreateRequestDTO newUser) {
-        userService.create(newUser);
+    public ResponseEntity<Void> create(
+            @Valid
+            @RequestBody
+            UserCreateRequestDTO dto
+    ) {
+        userService.create(dto);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
+    public ResponseEntity<Void> delete(
+            @PathVariable("id") Integer id
+    ) {
         userService.deleteById(id);
 
         return ResponseEntity.noContent().build();
     }
 
     @PatchMapping("/{id}/name")
-    public ResponseEntity<Void> updateName(@PathVariable Integer id, @Valid @RequestBody UpdateNameDTO dto) {
+    public ResponseEntity<Void> updateName(
+            @PathVariable Integer id,
+            @Valid @RequestBody UpdateNameDTO dto
+    ) {
         userService.updateName(id, dto.newName());
 
         return ResponseEntity.noContent().build();
     }
 
     @PatchMapping("/{id}/username")
-    public ResponseEntity<UserResponseDTO> changeUsername(@PathVariable Integer id, @Valid @RequestBody ChangeUsernameDTO dto) {
-        userService.changeUsername(id, dto);
+    public ResponseEntity<UserResponseDTO> updateUsername(
+            @PathVariable Integer id,
+            @Valid @RequestBody UpdateUsernameDTO dto
+    ) {
+        String normalizedUsername = dto.newUsername().toLowerCase().trim();
+        userService.updateUsername(id, normalizedUsername);
 
         return ResponseEntity.noContent().build();
     }
 
     @PatchMapping("/{id}/email")
-    public ResponseEntity<Void> updateEmail(@PathVariable Integer id, @Valid @RequestBody UpdateEmailDTO dto) {
+    public ResponseEntity<Void> updateEmail(
+            @PathVariable Integer id,
+            @Valid @RequestBody UpdateEmailDTO dto
+    ) {
         userService.updateEmail(id, dto.newEmail());
 
         return ResponseEntity.noContent().build();

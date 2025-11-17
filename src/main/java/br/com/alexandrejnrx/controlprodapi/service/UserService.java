@@ -1,7 +1,6 @@
 package br.com.alexandrejnrx.controlprodapi.service;
 
 import br.com.alexandrejnrx.controlprodapi.dto.mapper.user.UserMapper;
-import br.com.alexandrejnrx.controlprodapi.dto.user.ChangeUsernameDTO;
 import br.com.alexandrejnrx.controlprodapi.dto.user.UserCreateRequestDTO;
 import br.com.alexandrejnrx.controlprodapi.dto.user.UserResponseDTO;
 import br.com.alexandrejnrx.controlprodapi.exception.UserEmailAlreadyRegisteredException;
@@ -9,10 +8,8 @@ import br.com.alexandrejnrx.controlprodapi.exception.UserNotFoundException;
 import br.com.alexandrejnrx.controlprodapi.exception.UserUsernameAlreadyRegisteredException;
 import br.com.alexandrejnrx.controlprodapi.model.User;
 import br.com.alexandrejnrx.controlprodapi.repository.UserRepository;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,8 +29,8 @@ public class UserService {
 
     public List<UserResponseDTO> findAll() {
         return userRepository.findAll()
-                .stream().
-                map(userMapper::toResponseDTO)
+                .stream()
+                .map(userMapper::toResponseDTO)
                 .collect(Collectors.toList());
     }
 
@@ -65,18 +62,14 @@ public class UserService {
         userRepository.save(existingUser);
     }
 
-    public void changeUsername(Integer id, ChangeUsernameDTO dto) {
+    public void updateUsername(Integer id, String newUsername) {
         User existingUser = findById(id);
 
-        if (userRepository.existsByUsername(dto.getNewUsername().toLowerCase().trim())) {
+        if (userRepository.existsByUsername(newUsername)) {
             throw new UserUsernameAlreadyRegisteredException();
         }
 
-        if (!passwordEncoder.matches(dto.getPassword(), existingUser.getPassword())) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Senha incorreta!");
-        }
-
-        existingUser.setUsername(dto.getNewUsername().toLowerCase().trim());
+        existingUser.setUsername(newUsername);
         userRepository.save(existingUser);
     }
 
