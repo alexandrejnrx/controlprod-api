@@ -1,5 +1,8 @@
 package br.com.alexandrejnrx.controlprodapi.service;
 
+import br.com.alexandrejnrx.controlprodapi.dto.mapper.productType.ProductTypeMapper;
+import br.com.alexandrejnrx.controlprodapi.dto.mapper.user.UserMapper;
+import br.com.alexandrejnrx.controlprodapi.dto.productType.ProductTypeCreateRequestDTO;
 import br.com.alexandrejnrx.controlprodapi.exception.ProductTypeNotFoundException;
 import br.com.alexandrejnrx.controlprodapi.model.ProductType;
 import br.com.alexandrejnrx.controlprodapi.model.Project;
@@ -12,9 +15,11 @@ import java.util.List;
 public class ProductTypeService {
 
     private final ProductTypeRepository productTypeRepository;
+    private final ProductTypeMapper productTypeMapper;
 
-    public ProductTypeService(ProductTypeRepository productTypeRepository) {
+    public ProductTypeService(ProductTypeRepository productTypeRepository, ProductTypeMapper productTypeMapper, UserMapper userMapper) {
         this.productTypeRepository = productTypeRepository;
+        this.productTypeMapper = productTypeMapper;
     }
 
     public List<ProductType> findAll() {
@@ -22,7 +27,9 @@ public class ProductTypeService {
     }
 
 
-    public void create(ProductType productType) {
+    public void create(ProductTypeCreateRequestDTO newProductTypeDTO) {
+        ProductType productType = productTypeMapper.toEntity(newProductTypeDTO);
+
         productTypeRepository.save(productType);
     }
 
