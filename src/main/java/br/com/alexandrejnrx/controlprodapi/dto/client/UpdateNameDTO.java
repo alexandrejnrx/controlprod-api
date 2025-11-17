@@ -4,5 +4,6 @@ import jakarta.validation.constraints.NotBlank;
 
 public record UpdateNameDTO(
         @NotBlank
-        String newName) {
+        String newName
+) {
 }
