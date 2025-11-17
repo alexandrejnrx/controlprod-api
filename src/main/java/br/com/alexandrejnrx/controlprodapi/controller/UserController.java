@@ -1,9 +1,6 @@
 package br.com.alexandrejnrx.controlprodapi.controller;
 
-import br.com.alexandrejnrx.controlprodapi.dto.user.ChangeUsernameDTO;
-import br.com.alexandrejnrx.controlprodapi.dto.user.UpdateNameDTO;
-import br.com.alexandrejnrx.controlprodapi.dto.user.UserCreateRequestDTO;
-import br.com.alexandrejnrx.controlprodapi.dto.user.UserResponseDTO;
+import br.com.alexandrejnrx.controlprodapi.dto.user.*;
 import br.com.alexandrejnrx.controlprodapi.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -52,6 +49,13 @@ public class UserController {
     @PatchMapping("/{id}/username")
     public ResponseEntity<UserResponseDTO> changeUsername(@PathVariable Integer id, @Valid @RequestBody ChangeUsernameDTO dto) {
         userService.changeUsername(id, dto);
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}/email")
+    public ResponseEntity<Void> updateEmail(@PathVariable Integer id, @Valid @RequestBody UpdateEmailDTO dto) {
+        userService.updateEmail(id, dto.newEmail());
 
         return ResponseEntity.noContent().build();
     }

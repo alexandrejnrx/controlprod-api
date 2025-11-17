@@ -4,6 +4,7 @@ import br.com.alexandrejnrx.controlprodapi.dto.mapper.user.UserMapper;
 import br.com.alexandrejnrx.controlprodapi.dto.user.ChangeUsernameDTO;
 import br.com.alexandrejnrx.controlprodapi.dto.user.UserCreateRequestDTO;
 import br.com.alexandrejnrx.controlprodapi.dto.user.UserResponseDTO;
+import br.com.alexandrejnrx.controlprodapi.exception.UserEmailAlreadyRegisteredException;
 import br.com.alexandrejnrx.controlprodapi.exception.UserNotFoundException;
 import br.com.alexandrejnrx.controlprodapi.model.User;
 import br.com.alexandrejnrx.controlprodapi.repository.UserRepository;
@@ -80,6 +81,17 @@ public class UserService {
         }
 
         existingUser.setUsername(dto.getNewUsername().toLowerCase().trim());
+        userRepository.save(existingUser);
+    }
+
+    public void updateEmail(Integer id, String newEmail) {
+        User existingUser = findById(id);
+
+        if (userRepository.existsByEmail(newEmail)) {
+            throw new UserEmailAlreadyRegisteredException();
+        }
+
+        existingUser.setEmail(newEmail);
         userRepository.save(existingUser);
     }
 

@@ -29,4 +29,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     private ResponseEntity<String> handleProductTypeNotFoundException(ProductTypeNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
+
+    private ResponseEntity<String> handleUserEmailAlreadyRegisteredException(UserEmailAlreadyRegisteredException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
 }
