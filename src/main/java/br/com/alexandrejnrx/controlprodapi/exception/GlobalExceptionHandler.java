@@ -34,4 +34,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     private ResponseEntity<String> handleUserEmailAlreadyRegisteredException(UserEmailAlreadyRegisteredException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
+
+    @ExceptionHandler(UserUsernameAlreadyRegisteredException.class)
+    private ResponseEntity<String> handleUserUsernameAlreadyRegisteredException(UserUsernameAlreadyRegisteredException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
 }

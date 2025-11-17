@@ -40,7 +40,7 @@ public class UserController {
     }
 
     @PatchMapping("/{id}/name")
-    public ResponseEntity<Void> updateName(@PathVariable Integer id, @RequestBody UpdateNameDTO dto) {
+    public ResponseEntity<Void> updateName(@PathVariable Integer id, @Valid @RequestBody UpdateNameDTO dto) {
         userService.updateName(id, dto.newName());
 
         return ResponseEntity.noContent().build();

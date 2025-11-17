@@ -6,6 +6,7 @@ import br.com.alexandrejnrx.controlprodapi.dto.user.UserCreateRequestDTO;
 import br.com.alexandrejnrx.controlprodapi.dto.user.UserResponseDTO;
 import br.com.alexandrejnrx.controlprodapi.exception.UserEmailAlreadyRegisteredException;
 import br.com.alexandrejnrx.controlprodapi.exception.UserNotFoundException;
+import br.com.alexandrejnrx.controlprodapi.exception.UserUsernameAlreadyRegisteredException;
 import br.com.alexandrejnrx.controlprodapi.model.User;
 import br.com.alexandrejnrx.controlprodapi.repository.UserRepository;
 import org.springframework.http.HttpStatus;
@@ -22,8 +23,6 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
-    private static final String ERROR_USERNAME_ALREADY_EXISTS = "Nome de usuário já cadastrado";
-    private static final String ERROR_EMAIL_ALREADY_EXISTS = "E-mail já cadastrado";
 
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, UserMapper userMapper) {
         this.userRepository = userRepository;
@@ -40,11 +39,11 @@ public class UserService {
 
     public void create(UserCreateRequestDTO newUser) {
         if (userRepository.existsByUsername(newUser.getUsername())) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, ERROR_USERNAME_ALREADY_EXISTS);
+            throw new UserUsernameAlreadyRegisteredException();
         }
 
         if (userRepository.existsByEmail(newUser.getEmail())) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, ERROR_EMAIL_ALREADY_EXISTS);
+            throw new UserEmailAlreadyRegisteredException();
         }
 
         User userToSave = userMapper.toEntity(newUser);
@@ -62,10 +61,7 @@ public class UserService {
     public void updateName(Integer id, String newName) {
         User existingUser = findById(id);
 
-        if (newName != null) {
-            existingUser.setName(newName);
-        }
-
+        existingUser.setName(newName);
         userRepository.save(existingUser);
     }
 
@@ -73,7 +69,7 @@ public class UserService {
         User existingUser = findById(id);
 
         if (userRepository.existsByUsername(dto.getNewUsername().toLowerCase().trim())) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, ERROR_USERNAME_ALREADY_EXISTS);
+            throw new UserUsernameAlreadyRegisteredException();
         }
 
         if (!passwordEncoder.matches(dto.getPassword(), existingUser.getPassword())) {
