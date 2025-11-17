@@ -28,16 +28,9 @@ public class UserController {
         return ResponseEntity.ok(userService.findAll());
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<UserResponseDTO> getUser(@PathVariable Integer id) {
-        UserResponseDTO userResponseDTO = userService.findById(id);
-
-        return ResponseEntity.ok(userResponseDTO);
-    }
-
     @PostMapping
-    public ResponseEntity<UserResponseDTO> create(@Valid @RequestBody UserCreateRequestDTO userCreateRequestDTO) {
-        userService.create(userCreateRequestDTO);
+    public ResponseEntity<Void> create(@Valid @RequestBody UserCreateRequestDTO newUser) {
+        userService.create(newUser);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -50,18 +43,16 @@ public class UserController {
     }
 
     @PatchMapping("/{id}/name")
-    public ResponseEntity<UserResponseDTO> updateName(@PathVariable Integer id, @Valid @RequestBody UpdateNameDTO dto) {
+    public ResponseEntity<Void> updateName(@PathVariable Integer id, @RequestBody UpdateNameDTO dto) {
         userService.updateName(id, dto.newName());
-        UserResponseDTO updatedUser = userService.findById(id);
 
-        return ResponseEntity.ok(updatedUser);
+        return ResponseEntity.noContent().build();
     }
 
     @PatchMapping("/{id}/username")
     public ResponseEntity<UserResponseDTO> changeUsername(@PathVariable Integer id, @Valid @RequestBody ChangeUsernameDTO dto) {
         userService.changeUsername(id, dto);
-        UserResponseDTO updatedUser = userService.findById(id);
 
-        return ResponseEntity.ok(updatedUser);
+        return ResponseEntity.noContent().build();
     }
 }

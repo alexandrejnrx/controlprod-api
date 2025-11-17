@@ -37,12 +37,6 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    public UserResponseDTO findById(Integer id) {
-        return userRepository.findById(id)
-                .map(userMapper::toResponseDTO)
-                .orElseThrow(UserNotFoundException::new);
-    }
-
     public void create(UserCreateRequestDTO newUser) {
         if (userRepository.existsByUsername(newUser.getUsername())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, ERROR_USERNAME_ALREADY_EXISTS);
@@ -59,13 +53,13 @@ public class UserService {
     }
 
     public void deleteById(Integer id) {
-        User existingUser = findUserById(id);
+        User existingUser = findById(id);
 
         userRepository.delete(existingUser);
     }
 
     public void updateName(Integer id, String newName) {
-        User existingUser = findUserById(id);
+        User existingUser = findById(id);
 
         if (newName != null) {
             existingUser.setName(newName);
@@ -75,7 +69,7 @@ public class UserService {
     }
 
     public void changeUsername(Integer id, ChangeUsernameDTO dto) {
-        User existingUser = findUserById(id);
+        User existingUser = findById(id);
 
         if (userRepository.existsByUsername(dto.getNewUsername().toLowerCase().trim())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, ERROR_USERNAME_ALREADY_EXISTS);
@@ -89,7 +83,7 @@ public class UserService {
         userRepository.save(existingUser);
     }
 
-    private User findUserById(Integer id) {
+    private User findById(Integer id) {
         return userRepository.findById(id)
                 .orElseThrow(UserNotFoundException::new);
     }
