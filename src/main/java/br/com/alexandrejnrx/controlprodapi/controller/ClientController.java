@@ -1,8 +1,6 @@
 package br.com.alexandrejnrx.controlprodapi.controller;
 
-import br.com.alexandrejnrx.controlprodapi.dto.client.ClientCreateRequestDTO;
-import br.com.alexandrejnrx.controlprodapi.dto.client.ClientResponseDTO;
-import br.com.alexandrejnrx.controlprodapi.dto.client.UpdateNameDTO;
+import br.com.alexandrejnrx.controlprodapi.dto.client.*;
 import br.com.alexandrejnrx.controlprodapi.service.ClientService;
 import br.com.alexandrejnrx.controlprodapi.service.UserService;
 import jakarta.validation.Valid;
@@ -29,22 +27,36 @@ public class ClientController {
     }
 
     @PostMapping
-    public ResponseEntity<ClientResponseDTO> create(@Valid @RequestBody ClientCreateRequestDTO clientCreateRequestDTO) {
+    public ResponseEntity<Void> create(@Valid @RequestBody ClientCreateRequestDTO clientCreateRequestDTO) {
         clientService.create(clientCreateRequestDTO);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ClientResponseDTO> delete(@PathVariable Integer id) {
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
         clientService.delete(id);
 
         return ResponseEntity.noContent().build();
     }
 
     @PatchMapping("/{id}/name")
-    public ResponseEntity<ClientResponseDTO> updateName(@PathVariable Integer id, @RequestBody UpdateNameDTO dto) {
+    public ResponseEntity<Void> updateName(@PathVariable Integer id, @RequestBody UpdateNameDTO dto) {
         clientService.updateName(id, dto.newName());
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}/client-type")
+    public ResponseEntity<Void> updateClientType(@PathVariable Integer id, @RequestBody UpdateClientTypeDTO dto) {
+        clientService.updateClientType(id, dto.newClientType());
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}/active")
+    public ResponseEntity<Void> updateActive(@PathVariable Integer id, @RequestBody UpdateActiveDTO dto) {
+        clientService.updateActive(id, dto.newActive());
 
         return ResponseEntity.noContent().build();
     }

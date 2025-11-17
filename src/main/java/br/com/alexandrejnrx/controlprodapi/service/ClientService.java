@@ -5,6 +5,7 @@ import br.com.alexandrejnrx.controlprodapi.dto.client.ClientResponseDTO;
 import br.com.alexandrejnrx.controlprodapi.dto.mapper.client.ClientMapper;
 import br.com.alexandrejnrx.controlprodapi.exception.ClientNotFoundException;
 import br.com.alexandrejnrx.controlprodapi.model.Client;
+import br.com.alexandrejnrx.controlprodapi.model.ClientType;
 import br.com.alexandrejnrx.controlprodapi.repository.ClientRepository;
 import org.springframework.stereotype.Service;
 
@@ -46,6 +47,26 @@ public class ClientService {
 
         if (newName != null) {
             clientToUpdate.setName(newName);
+        }
+
+        clientRepository.save(clientToUpdate);
+    }
+
+    public void updateClientType(Integer id, ClientType newClientType) {
+        Client clientToUpdate = findById(id);
+
+        if (newClientType != null) {
+            clientToUpdate.setClientType(newClientType);
+        }
+
+        clientRepository.save(clientToUpdate);
+    }
+
+    public void updateActive(Integer id, Boolean newActive) {
+        Client clientToUpdate = findById(id);
+
+        if (newActive != null) {
+            clientToUpdate.setActive(newActive);
         }
 
         clientRepository.save(clientToUpdate);
