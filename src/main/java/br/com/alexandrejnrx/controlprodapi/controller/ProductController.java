@@ -105,4 +105,14 @@ public class ProductController {
 
         return ResponseEntity.noContent().build();
     }
+
+    @PatchMapping("/{id}/update-production-date")
+    public ResponseEntity<Void> updateProductionDate(
+            @PathVariable Integer id,
+            @RequestBody UpdateProductionDateDTO dto
+    ) {
+        productService.updateProductionDate(id, dto.newProductionDate());
+
+        return ResponseEntity.noContent().build();
+    }
 }

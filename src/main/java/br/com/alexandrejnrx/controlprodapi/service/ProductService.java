@@ -10,6 +10,7 @@ import br.com.alexandrejnrx.controlprodapi.model.ProductType;
 import br.com.alexandrejnrx.controlprodapi.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -85,6 +86,13 @@ public class ProductService {
         Product existingProduct = findById(id);
 
         existingProduct.setFirmwareVersion(newFirmwareVersion);
+        productRepository.save(existingProduct);
+    }
+
+    public void updateProductionDate(Integer id, LocalDate newProductionDate) {
+        Product existingProduct = findById(id);
+
+        existingProduct.setProductionDate(newProductionDate);
         productRepository.save(existingProduct);
     }
 
