@@ -1,6 +1,7 @@
 package br.com.alexandrejnrx.controlprodapi.controller;
 
 import br.com.alexandrejnrx.controlprodapi.dto.project.ProjectCreateRequestDTO;
+import br.com.alexandrejnrx.controlprodapi.dto.project.UpdateClientDTO;
 import br.com.alexandrejnrx.controlprodapi.dto.project.UpdateNameDTO;
 import br.com.alexandrejnrx.controlprodapi.model.Project;
 import br.com.alexandrejnrx.controlprodapi.service.ProjectService;
@@ -47,6 +48,13 @@ public class ProjectController {
     @PatchMapping("/{id}/update-name")
     public ResponseEntity<Void> updateName(@PathVariable Integer id, @RequestBody UpdateNameDTO dto) {
         projectService.updateName(id, dto.newName());
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}/update-client")
+    public ResponseEntity<Void> updateClient(@PathVariable Integer id, @RequestBody UpdateClientDTO dto) {
+        projectService.updateClient(id, dto.newClient());
 
         return ResponseEntity.noContent().build();
     }

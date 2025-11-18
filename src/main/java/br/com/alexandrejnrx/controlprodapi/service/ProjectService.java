@@ -4,6 +4,7 @@ import br.com.alexandrejnrx.controlprodapi.dto.mapper.project.ProjectMapper;
 import br.com.alexandrejnrx.controlprodapi.dto.project.ProjectCreateRequestDTO;
 import br.com.alexandrejnrx.controlprodapi.exception.ProjectNameAlreadyRegisteredException;
 import br.com.alexandrejnrx.controlprodapi.exception.ProjectNotFoundException;
+import br.com.alexandrejnrx.controlprodapi.model.Client;
 import br.com.alexandrejnrx.controlprodapi.model.Project;
 import br.com.alexandrejnrx.controlprodapi.repository.ProjectRepository;
 import org.springframework.stereotype.Service;
@@ -43,7 +44,18 @@ public class ProjectService {
     public void updateName(Integer id, String newName) {
         Project projectToUpdate = findById(id);
 
+        if (projectToUpdate.getName().equals(newName)) {
+            throw new ProjectNameAlreadyRegisteredException();
+        }
+
         projectToUpdate.setName(newName);
+    }
+
+    public void updateClient(Integer id, Client newClient) {
+        Project projectToUpdate = findById(id);
+
+        projectToUpdate.setClient(newClient);
+        projectRepository.save(projectToUpdate);
     }
 
     private Project findById(Integer id) {
