@@ -1,4 +1,4 @@
-package br.com.alexandrejnrx.controlprodapi.dto.mapper.project;
+package br.com.alexandrejnrx.controlprodapi.dto.project;
 
 import jakarta.validation.constraints.NotBlank;
 

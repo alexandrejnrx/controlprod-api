@@ -1,6 +1,7 @@
 package br.com.alexandrejnrx.controlprodapi.controller;
 
 import br.com.alexandrejnrx.controlprodapi.dto.project.ProjectCreateRequestDTO;
+import br.com.alexandrejnrx.controlprodapi.dto.project.UpdateNameDTO;
 import br.com.alexandrejnrx.controlprodapi.model.Project;
 import br.com.alexandrejnrx.controlprodapi.service.ProjectService;
 import jakarta.validation.Valid;
@@ -34,5 +35,17 @@ public class ProjectController {
         projectService.create(dto);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+        projectService.delete(id);
+
+        return ResponseEntity.noContent().build();
+    }
+
+    public ResponseEntity<Void> updateName(@PathVariable Integer id, @RequestBody UpdateNameDTO dto) {
+        projectService.updateName(id, dto.newName());
+
+        return ResponseEntity.noContent().build();
     }
 }
