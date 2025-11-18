@@ -12,7 +12,7 @@ public class ProductResponseDTO {
 
     private Integer id;
     private ProductType productType;
-    private Integer uniqueProductNumber;
+    private Integer nup;
     private Integer serialNumber;
     private String modem;
     private String imei;

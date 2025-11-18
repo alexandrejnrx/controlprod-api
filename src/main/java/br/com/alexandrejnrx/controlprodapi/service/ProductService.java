@@ -1,10 +1,12 @@
 package br.com.alexandrejnrx.controlprodapi.service;
 
-import br.com.alexandrejnrx.controlprodapi.dto.mapper.ProductConverter;
+import br.com.alexandrejnrx.controlprodapi.dto.mapper.product.ProductMapper;
 import br.com.alexandrejnrx.controlprodapi.dto.product.ProductRequestDTO;
 import br.com.alexandrejnrx.controlprodapi.dto.product.ProductResponseDTO;
 import br.com.alexandrejnrx.controlprodapi.exception.ProductNotFoundException;
+import br.com.alexandrejnrx.controlprodapi.exception.ProductNupAlreadyRegisteredException;
 import br.com.alexandrejnrx.controlprodapi.model.Product;
+import br.com.alexandrejnrx.controlprodapi.model.ProductType;
 import br.com.alexandrejnrx.controlprodapi.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
@@ -15,64 +17,51 @@ import java.util.stream.Collectors;
 public class ProductService {
 
     private final ProductRepository productRepository;
+    private final ProductMapper productMapper;
 
-    public ProductService(ProductRepository productRepository) {
+    public ProductService(ProductRepository productRepository, ProductMapper productMapper) {
         this.productRepository = productRepository;
+        this.productMapper = productMapper;
     }
 
     public List<ProductResponseDTO> findAll() {
         return productRepository.findAll()
                 .stream()
-                .map(ProductConverter::converterEntidadeParaDTO)
+                .map(productMapper::toResponseDTO)
                 .collect(Collectors.toList());
     }
 
-    public ProductResponseDTO findById(Integer id) {
-        return productRepository.findById(id)
-                .map(ProductConverter::converterEntidadeParaDTO)
-                .orElseThrow(() -> new ProductNotFoundException());
-    }
+    public void create(ProductRequestDTO productRequestDTO) {
+        if (productRepository.existsByNup(productRequestDTO.getNup())) {
+            throw new ProductNupAlreadyRegisteredException();
+        }
 
-    public ProductResponseDTO create(ProductRequestDTO productRequestDTO) {
-        Product productToCreate = ProductConverter.converterDTOParaEntidade(productRequestDTO);
-        Product productToSave = productRepository.save(productToCreate);
-
-        return ProductConverter.converterEntidadeParaDTO(productToSave);
+        Product productToCreate = productMapper.toEntity(productRequestDTO);
+        productRepository.save(productToCreate);
     }
 
     public void delete(Integer id) {
-        Product product = productRepository.findById(id)
-                .orElseThrow(() -> new ProductNotFoundException());
+        Product product = findById(id);
 
         productRepository.deleteById(id);
     }
 
-    public ProductResponseDTO update(Integer id, ProductRequestDTO productRequestDTO) {
-        Product existingProduct = productRepository.findById(id)
-                .orElseThrow(() -> new ProductNotFoundException());
+    public void updateProductType(Integer id, ProductType newProductType) {
+        Product existingProduct = findById(id);
 
-        if (productRequestDTO.getNup() != null) {
-            existingProduct.setNup(productRequestDTO.getNup());
-        }
+        existingProduct.setProductType(newProductType);
+        productRepository.save(existingProduct);
+    }
 
-        if (productRequestDTO.getSerialNumber() != null) {
-            existingProduct.setSerialNumber(productRequestDTO.getSerialNumber());
-        }
+    public void updateNup(Integer id, Integer newNup) {
+        Product existingProduct = findById(id);
 
-        if (productRequestDTO.getProductionDate() != null) {
-            existingProduct.setProductionDate(productRequestDTO.getProductionDate());
-        }
+        existingProduct.setNup(newNup);
+        productRepository.save(existingProduct);
+    }
 
-        if (productRequestDTO.getBatchNumber() != null) {
-            existingProduct.setBatchNumber(productRequestDTO.getBatchNumber());
-        }
-
-        if (productRequestDTO.getProducerName() != null) {
-            existingProduct.setProducerName(productRequestDTO.getProducerName());
-        }
-
-        Product updatedProduct = productRepository.save(existingProduct);
-
-        return ProductConverter.converterEntidadeParaDTO(updatedProduct);
+    private Product findById(Integer id) {
+        return productRepository.findById(id)
+                .orElseThrow(ProductNotFoundException::new);
     }
 }
