@@ -70,7 +70,11 @@ public class ProjectController {
     }
 
     @PatchMapping("/{id}/update-active")
-    public ResponseEntity<Void> updateClient(@PathVariable Integer id, @RequestBody UpdateActiveDTO dto) {
+    public ResponseEntity<Void> updateClient(
+            @PathVariable Integer id,
+            @Valid
+            @RequestBody UpdateActiveDTO dto
+    ) {
         projectService.updateActive(id, dto.newActive());
 
         return ResponseEntity.noContent().build();

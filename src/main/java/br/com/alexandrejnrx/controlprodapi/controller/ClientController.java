@@ -44,7 +44,7 @@ public class ClientController {
         return ResponseEntity.noContent().build();
     }
 
-    @PatchMapping("/{id}/name")
+    @PatchMapping("/{id}/update-name")
     public ResponseEntity<Void> updateName(
             @PathVariable Integer id,
             @Valid
@@ -55,7 +55,7 @@ public class ClientController {
         return ResponseEntity.noContent().build();
     }
 
-    @PatchMapping("/{id}/client-type")
+    @PatchMapping("/{id}/update-client-type")
     public ResponseEntity<Void> updateClientType(
             @PathVariable Integer id,
             @Valid
@@ -66,7 +66,7 @@ public class ClientController {
         return ResponseEntity.noContent().build();
     }
 
-    @PatchMapping("/{id}/active")
+    @PatchMapping("/{id}/update-active")
     public ResponseEntity<Void> updateActive(
             @PathVariable Integer id,
             @Valid
