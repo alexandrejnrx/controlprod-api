@@ -45,7 +45,7 @@ public class ProductTypeController {
         return ResponseEntity.noContent().build();
     }
 
-    @PatchMapping("/{id}/name")
+    @PatchMapping("/{id}/update-name")
     public ResponseEntity<Void> updateName(
             @PathVariable Integer id,
             @Valid
@@ -56,7 +56,7 @@ public class ProductTypeController {
         return ResponseEntity.noContent().build();
     }
 
-    @PatchMapping("/{id}/internal-code")
+    @PatchMapping("/{id}/update-internal-code")
     public ResponseEntity<Void> updateInternalCode(
             @PathVariable Integer id,
             @Valid
@@ -67,7 +67,7 @@ public class ProductTypeController {
         return ResponseEntity.noContent().build();
     }
 
-    @PatchMapping("/{id}/project")
+    @PatchMapping("/{id}/update-project")
     public ResponseEntity<Void> updateProject(
             @PathVariable Integer id,
             @Valid
@@ -78,7 +78,7 @@ public class ProductTypeController {
         return ResponseEntity.noContent().build();
     }
 
-    @PatchMapping("/{id}/active")
+    @PatchMapping("/{id}/update-active")
     public ResponseEntity<Void> updateActive(
             @PathVariable Integer id,
             @Valid
