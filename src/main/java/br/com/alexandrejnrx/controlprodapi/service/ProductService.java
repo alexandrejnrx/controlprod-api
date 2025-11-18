@@ -74,6 +74,13 @@ public class ProductService {
         productRepository.save(existingProduct);
     }
 
+    public void updateImei(Integer id, String newImei) {
+        Product existingProduct = findById(id);
+
+        existingProduct.setImei(newImei);
+        productRepository.save(existingProduct);
+    }
+
     public void updateFirmwareVersion(Integer id, String newFirmwareVersion) {
         Product existingProduct = findById(id);
 

@@ -86,6 +86,16 @@ public class ProductController {
         return ResponseEntity.noContent().build();
     }
 
+    @PatchMapping("/{id}/update-imei")
+    public ResponseEntity<Void> updateImei(
+            @PathVariable Integer id,
+            @RequestBody UpdateImeiDTO dto
+    ) {
+        productService.updateImei(id, dto.newImei());
+
+        return ResponseEntity.noContent().build();
+    }
+
     @PatchMapping("/{id}/update-firmware-version")
     public ResponseEntity<Void> updateFirmwareVersion(
             @PathVariable Integer id,
