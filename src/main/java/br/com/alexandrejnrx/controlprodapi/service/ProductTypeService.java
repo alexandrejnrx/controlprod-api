@@ -42,40 +42,28 @@ public class ProductTypeService {
     public void updateName(Integer id, String newName) {
         ProductType productTypeToUpdate = findById(id);
 
-        if (newName != null) {
-            productTypeToUpdate.setName(newName);
-        }
-
+        productTypeToUpdate.setName(newName);
         productTypeRepository.save(productTypeToUpdate);
     }
 
     public void updateInternalCode(Integer id, String newInternalCode) {
         ProductType productTypeToUpdate = findById(id);
 
-        if (newInternalCode != null) {
-            productTypeToUpdate.setInternalCode(newInternalCode);
-        }
-
+        productTypeToUpdate.setInternalCode(newInternalCode);
         productTypeRepository.save(productTypeToUpdate);
     }
 
     public void updateProject(Integer id, Project newProject) {
         ProductType productTypeToUpdate = findById(id);
 
-        if (newProject != null) {
-            productTypeToUpdate.setProject(newProject);
-        }
-
+        productTypeToUpdate.setProject(newProject);
         productTypeRepository.save(productTypeToUpdate);
     }
 
     public void updateActive(Integer id, Boolean newActive) {
         ProductType productTypeToUpdate = findById(id);
 
-        if (newActive != null) {
-            productTypeToUpdate.setActive(newActive);
-        }
-
+        productTypeToUpdate.setActive(newActive);
         productTypeRepository.save(productTypeToUpdate);
     }
 

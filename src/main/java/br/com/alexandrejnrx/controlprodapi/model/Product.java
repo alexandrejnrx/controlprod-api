@@ -22,7 +22,7 @@ public class Product {
     private Integer nup;
     @Column(name = "serial_number", unique = true)
     private Integer serialNumber;
-    @Column(length = 20)
+    @Column(length = 10)
     private String modem;
     @Column(length = 100)
     private String imei;

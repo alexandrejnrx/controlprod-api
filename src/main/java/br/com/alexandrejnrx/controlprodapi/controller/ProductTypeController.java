@@ -3,6 +3,7 @@ package br.com.alexandrejnrx.controlprodapi.controller;
 import br.com.alexandrejnrx.controlprodapi.dto.productType.*;
 import br.com.alexandrejnrx.controlprodapi.model.ProductType;
 import br.com.alexandrejnrx.controlprodapi.service.ProductTypeService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +28,7 @@ public class ProductTypeController {
 
     @PostMapping
     public ResponseEntity<Void> create(
+            @Valid
             @RequestBody ProductTypeCreateRequestDTO dto
     ) {
         productTypeService.create(dto);
@@ -46,6 +48,7 @@ public class ProductTypeController {
     @PatchMapping("/{id}/name")
     public ResponseEntity<Void> updateName(
             @PathVariable Integer id,
+            @Valid
             @RequestBody UpdateNameDTO dto
     ) {
         productTypeService.updateName(id, dto.newName());
@@ -56,6 +59,7 @@ public class ProductTypeController {
     @PatchMapping("/{id}/internal-code")
     public ResponseEntity<Void> updateInternalCode(
             @PathVariable Integer id,
+            @Valid
             @RequestBody UpdateInternalCodeDTO dto
     ) {
         productTypeService.updateInternalCode(id, dto.newInternalCode());
@@ -66,6 +70,7 @@ public class ProductTypeController {
     @PatchMapping("/{id}/project")
     public ResponseEntity<Void> updateProject(
             @PathVariable Integer id,
+            @Valid
             @RequestBody UpdateProjectDTO dto
     ) {
         productTypeService.updateProject(id, dto.newProject());
@@ -76,6 +81,7 @@ public class ProductTypeController {
     @PatchMapping("/{id}/active")
     public ResponseEntity<Void> updateActive(
             @PathVariable Integer id,
+            @Valid
             @RequestBody UpdateActiveDTO dto
     ) {
         productTypeService.updateActive(id, dto.newActive());
