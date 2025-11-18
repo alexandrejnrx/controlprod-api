@@ -1,0 +1,82 @@
+package br.com.alexandrejnrx.controlprodapi.controller;
+
+import br.com.alexandrejnrx.controlprodapi.dto.project.ProjectCreateRequestDTO;
+import br.com.alexandrejnrx.controlprodapi.dto.project.UpdateActiveDTO;
+import br.com.alexandrejnrx.controlprodapi.dto.project.UpdateClientDTO;
+import br.com.alexandrejnrx.controlprodapi.dto.project.UpdateNameDTO;
+import br.com.alexandrejnrx.controlprodapi.model.Project;
+import br.com.alexandrejnrx.controlprodapi.service.ProjectService;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/projects")
+public class ProjectController {
+
+    private final ProjectService projectService;
+
+    public ProjectController(ProjectService projectService) {
+        this.projectService = projectService;
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Project>> findAll() {
+
+        return ResponseEntity.ok(projectService.findAll());
+    }
+
+    @PostMapping
+    public ResponseEntity<Project> create(
+            @Valid
+            @RequestBody ProjectCreateRequestDTO dto
+    ) {
+        projectService.create(dto);
+
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(
+            @PathVariable Integer id
+    ) {
+        projectService.delete(id);
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}/update-name")
+    public ResponseEntity<Void> updateName(
+            @PathVariable Integer id,
+            @Valid @RequestBody UpdateNameDTO dto
+    ) {
+        projectService.updateName(id, dto.newName());
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}/update-client")
+    public ResponseEntity<Void> updateClient(
+            @PathVariable Integer id,
+            @Valid
+            @RequestBody UpdateClientDTO dto
+    ) {
+        projectService.updateClient(id, dto.newClient());
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}/update-active")
+    public ResponseEntity<Void> updateClient(
+            @PathVariable Integer id,
+            @Valid
+            @RequestBody UpdateActiveDTO dto
+    ) {
+        projectService.updateActive(id, dto.newActive());
+
+        return ResponseEntity.noContent().build();
+    }
+}

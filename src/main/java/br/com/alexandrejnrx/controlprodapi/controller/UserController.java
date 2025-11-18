@@ -1,7 +1,6 @@
 package br.com.alexandrejnrx.controlprodapi.controller;
 
-import br.com.alexandrejnrx.controlprodapi.dto.usuario.UserRequestDTO;
-import br.com.alexandrejnrx.controlprodapi.dto.usuario.UserResponseDTO;
+import br.com.alexandrejnrx.controlprodapi.dto.user.*;
 import br.com.alexandrejnrx.controlprodapi.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -21,36 +20,59 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<UserResponseDTO>> findAll() {
+    public ResponseEntity<List<UserResponseDTO>> getUsers() {
+
         return ResponseEntity.ok(userService.findAll());
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<UserResponseDTO> findById(@PathVariable Integer id) {
-        UserResponseDTO userResponseDTO = userService.findById(id);
-
-        return ResponseEntity.ok(userResponseDTO);
-    }
-
     @PostMapping
-    public ResponseEntity<UserResponseDTO> create(@Valid @RequestBody UserRequestDTO userRequestDTO) {
-        UserResponseDTO createdUser = userService.create(userRequestDTO);
+    public ResponseEntity<Void> create(
+            @Valid
+            @RequestBody
+            UserCreateRequestDTO dto
+    ) {
+        userService.create(dto);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
-        userService.delete(id);
+    public ResponseEntity<Void> delete(
+            @PathVariable("id") Integer id
+    ) {
+        userService.deleteById(id);
 
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<UserResponseDTO> update(@PathVariable("id") Integer id, @RequestBody UserRequestDTO userRequestDTO) {
-        UserResponseDTO updatedUser = userService.update(id, userRequestDTO);
-        userService.update(id, userRequestDTO);
+    @PatchMapping("/{id}/update-name")
+    public ResponseEntity<Void> updateName(
+            @PathVariable Integer id,
+            @Valid @RequestBody UpdateNameDTO dto
+    ) {
+        userService.updateName(id, dto.newName());
 
-        return ResponseEntity.status(HttpStatus.OK).body(updatedUser);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}/update-username")
+    public ResponseEntity<UserResponseDTO> updateUsername(
+            @PathVariable Integer id,
+            @Valid @RequestBody UpdateUsernameDTO dto
+    ) {
+        String normalizedUsername = dto.newUsername().toLowerCase().trim();
+        userService.updateUsername(id, normalizedUsername);
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}/update-email")
+    public ResponseEntity<Void> updateEmail(
+            @PathVariable Integer id,
+            @Valid @RequestBody UpdateEmailDTO dto
+    ) {
+        userService.updateEmail(id, dto.newEmail());
+
+        return ResponseEntity.noContent().build();
     }
 }

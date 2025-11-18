@@ -1,4 +1,4 @@
-package br.com.alexandrejnrx.controlprodapi.configuration;
+package br.com.alexandrejnrx.controlprodapi.service;
 
 import br.com.alexandrejnrx.controlprodapi.model.User;
 import com.auth0.jwt.JWT;

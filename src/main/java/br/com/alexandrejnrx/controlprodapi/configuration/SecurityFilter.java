@@ -1,6 +1,7 @@
 package br.com.alexandrejnrx.controlprodapi.configuration;
 
 import br.com.alexandrejnrx.controlprodapi.repository.UserRepository;
+import br.com.alexandrejnrx.controlprodapi.service.TokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
