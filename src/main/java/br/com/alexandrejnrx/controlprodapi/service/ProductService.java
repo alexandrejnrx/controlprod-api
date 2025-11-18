@@ -60,6 +60,13 @@ public class ProductService {
         productRepository.save(existingProduct);
     }
 
+    public void updateSerialNumber(Integer id, Integer newSerialNumber) {
+        Product existingProduct = findById(id);
+
+        existingProduct.setNup(newSerialNumber);
+        productRepository.save(existingProduct);
+    }
+
     private Product findById(Integer id) {
         return productRepository.findById(id)
                 .orElseThrow(ProductNotFoundException::new);

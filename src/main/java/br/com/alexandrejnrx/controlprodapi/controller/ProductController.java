@@ -1,9 +1,6 @@
 package br.com.alexandrejnrx.controlprodapi.controller;
 
-import br.com.alexandrejnrx.controlprodapi.dto.product.ProductRequestDTO;
-import br.com.alexandrejnrx.controlprodapi.dto.product.ProductResponseDTO;
-import br.com.alexandrejnrx.controlprodapi.dto.product.UpdateNup;
-import br.com.alexandrejnrx.controlprodapi.dto.product.UpdateProductType;
+import br.com.alexandrejnrx.controlprodapi.dto.product.*;
 import br.com.alexandrejnrx.controlprodapi.service.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -68,4 +65,15 @@ public class ProductController {
 
         return ResponseEntity.noContent().build();
     }
+
+    @PutMapping("/{id}/update-serial-number")
+    public ResponseEntity<Void> updateSerialNumber(
+            @PathVariable Integer id,
+            @RequestBody UpdateSerialNumberDTO dto
+    ) {
+        productService.updateSerialNumber(id, dto.newSerialNumber());
+
+        return ResponseEntity.noContent().build();
+    }
+
 }
