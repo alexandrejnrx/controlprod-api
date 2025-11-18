@@ -45,7 +45,7 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
-    @PatchMapping("/{id}/name")
+    @PatchMapping("/{id}/update-name")
     public ResponseEntity<Void> updateName(
             @PathVariable Integer id,
             @Valid @RequestBody UpdateNameDTO dto
@@ -55,7 +55,7 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
-    @PatchMapping("/{id}/username")
+    @PatchMapping("/{id}/update-username")
     public ResponseEntity<UserResponseDTO> updateUsername(
             @PathVariable Integer id,
             @Valid @RequestBody UpdateUsernameDTO dto
@@ -66,7 +66,7 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
-    @PatchMapping("/{id}/email")
+    @PatchMapping("/{id}/update-email")
     public ResponseEntity<Void> updateEmail(
             @PathVariable Integer id,
             @Valid @RequestBody UpdateEmailDTO dto
