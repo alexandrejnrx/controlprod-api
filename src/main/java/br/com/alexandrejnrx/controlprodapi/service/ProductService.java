@@ -63,7 +63,14 @@ public class ProductService {
     public void updateSerialNumber(Integer id, Integer newSerialNumber) {
         Product existingProduct = findById(id);
 
-        existingProduct.setNup(newSerialNumber);
+        existingProduct.setSerialNumber(newSerialNumber);
+        productRepository.save(existingProduct);
+    }
+
+    public void updateModem(Integer id, String newModem) {
+        Product existingProduct = findById(id);
+
+        existingProduct.setModem(newModem);
         productRepository.save(existingProduct);
     }
 

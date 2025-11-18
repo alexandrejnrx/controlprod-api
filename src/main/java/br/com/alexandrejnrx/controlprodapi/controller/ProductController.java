@@ -76,4 +76,13 @@ public class ProductController {
         return ResponseEntity.noContent().build();
     }
 
+    @PutMapping("/{id}/update-modem")
+    public ResponseEntity<Void> updateModem(
+            @PathVariable Integer id,
+            @RequestBody UpdateModemDTO dto
+    ) {
+        productService.updateModem(id, dto.newModem());
+
+        return ResponseEntity.noContent().build();
+    }
 }
