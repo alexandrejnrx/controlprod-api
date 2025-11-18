@@ -44,7 +44,7 @@ public class ProductService {
     public void delete(Integer id) {
         Product product = findById(id);
 
-        productRepository.deleteById(id);
+        productRepository.delete(product);
     }
 
     public void updateProductType(Integer id, ProductType newProductType) {
@@ -100,6 +100,13 @@ public class ProductService {
         Product existingProduct = findById(id);
 
         existingProduct.setBatchNumber(newBatchNumber);
+        productRepository.save(existingProduct);
+    }
+
+    public void updateProducerName(Integer id, String newProducerName) {
+        Product existingProduct = findById(id);
+
+        existingProduct.setProducerName(newProducerName);
         productRepository.save(existingProduct);
     }
 

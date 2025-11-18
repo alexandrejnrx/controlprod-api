@@ -119,9 +119,21 @@ public class ProductController {
     @PatchMapping("/{id}/update-batch-number")
     public ResponseEntity<Void> updateBatchNumber(
             @PathVariable Integer id,
+            @Valid
             @RequestBody UpdateBatchNumberDTO dto
     ) {
         productService.updateBatchNumber(id, dto.batchNumber());
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}/update-producer-name")
+    public ResponseEntity<Void> updateProducerName(
+            @PathVariable Integer id,
+            @Valid
+            @RequestBody UpdateProducerNameDTO dto
+    ) {
+        productService.updateProducerName(id, dto.newProducerName());
 
         return ResponseEntity.noContent().build();
     }
