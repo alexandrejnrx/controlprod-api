@@ -37,12 +37,14 @@ public class ProjectController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         projectService.delete(id);
 
         return ResponseEntity.noContent().build();
     }
 
+    @PatchMapping("/{id}/update-name")
     public ResponseEntity<Void> updateName(@PathVariable Integer id, @RequestBody UpdateNameDTO dto) {
         projectService.updateName(id, dto.newName());
 

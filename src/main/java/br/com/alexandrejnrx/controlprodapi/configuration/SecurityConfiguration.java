@@ -44,6 +44,7 @@ public class SecurityConfiguration {
 
                         .requestMatchers(HttpMethod.GET, "/projects").authenticated()
                         .requestMatchers(HttpMethod.POST, "/projects").authenticated()
+                        .requestMatchers(HttpMethod.PATCH, "/projects/**").authenticated()
 
                         .requestMatchers(HttpMethod.GET, "/product-types").authenticated()
                         .requestMatchers(HttpMethod.POST, "/product-types").authenticated()
