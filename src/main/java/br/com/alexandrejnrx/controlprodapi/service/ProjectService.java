@@ -47,6 +47,7 @@ public class ProjectService {
     }
 
     private Project findById(Integer id) {
-        throw new ProjectNotFoundException();
+        return projectRepository.findById(id)
+                .orElseThrow(ProjectNotFoundException::new);
     }
 }
