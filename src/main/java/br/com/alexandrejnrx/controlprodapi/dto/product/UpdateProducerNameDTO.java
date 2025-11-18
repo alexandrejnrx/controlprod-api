@@ -1,9 +1,9 @@
 package br.com.alexandrejnrx.controlprodapi.dto.product;
 
-import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 
 public record UpdateProducerNameDTO(
-        @Valid
+        @NotBlank(message = "O campo responsável não pode ser vazio.")
         String newProducerName
 ) {
 }
