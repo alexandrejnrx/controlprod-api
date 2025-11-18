@@ -48,7 +48,7 @@ public class ProductController {
     public ResponseEntity<Void> updateProductType(
             @PathVariable Integer id,
             @Valid
-            @RequestBody UpdateProductType dto
+            @RequestBody UpdateProductTypeDTO dto
     ) {
         productService.updateProductType(id, dto.newProductType());
 
