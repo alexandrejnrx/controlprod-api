@@ -58,6 +58,13 @@ public class ProjectService {
         projectRepository.save(projectToUpdate);
     }
 
+    public void updateActive(Integer id, Boolean newActive) {
+        Project projectToUpdate = findById(id);
+
+        projectToUpdate.setActive(newActive);
+        projectRepository.save(projectToUpdate);
+    }
+
     private Project findById(Integer id) {
         return projectRepository.findById(id)
                 .orElseThrow(ProjectNotFoundException::new);
