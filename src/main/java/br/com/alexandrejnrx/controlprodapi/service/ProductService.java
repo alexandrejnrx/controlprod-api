@@ -74,6 +74,13 @@ public class ProductService {
         productRepository.save(existingProduct);
     }
 
+    public void updateFirmwareVersion(Integer id, String newFirmwareVersion) {
+        Product existingProduct = findById(id);
+
+        existingProduct.setFirmwareVersion(newFirmwareVersion);
+        productRepository.save(existingProduct);
+    }
+
     private Product findById(Integer id) {
         return productRepository.findById(id)
                 .orElseThrow(ProductNotFoundException::new);

@@ -44,7 +44,7 @@ public class ProductController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/{id}/update-product-type")
+    @PatchMapping("/{id}/update-product-type")
     public ResponseEntity<Void> updateProductType(
             @PathVariable Integer id,
             @Valid
@@ -55,7 +55,7 @@ public class ProductController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/{id}/update-nup")
+    @PatchMapping("/{id}/update-nup")
     public ResponseEntity<Void> updateNup(
             @PathVariable Integer id,
             @Valid
@@ -66,7 +66,7 @@ public class ProductController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/{id}/update-serial-number")
+    @PatchMapping("/{id}/update-serial-number")
     public ResponseEntity<Void> updateSerialNumber(
             @PathVariable Integer id,
             @RequestBody UpdateSerialNumberDTO dto
@@ -76,12 +76,22 @@ public class ProductController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/{id}/update-modem")
+    @PatchMapping("/{id}/update-modem")
     public ResponseEntity<Void> updateModem(
             @PathVariable Integer id,
             @RequestBody UpdateModemDTO dto
     ) {
         productService.updateModem(id, dto.newModem());
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}/update-firmware-version")
+    public ResponseEntity<Void> updateFirmwareVersion(
+            @PathVariable Integer id,
+            @RequestBody UpdateModemDTO dto
+    ) {
+        productService.updateFirmwareVersion(id, dto.newModem());
 
         return ResponseEntity.noContent().build();
     }
