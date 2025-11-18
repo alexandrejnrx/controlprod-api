@@ -4,5 +4,6 @@ import jakarta.validation.constraints.NotBlank;
 
 public record UpdateInternalCodeDTO(
         @NotBlank(message = "O campo código, não pode ser vazio.")
-        String newInternalCode) {
+        String newInternalCode
+) {
 }

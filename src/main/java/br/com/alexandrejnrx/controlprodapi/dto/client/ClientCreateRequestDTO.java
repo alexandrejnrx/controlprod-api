@@ -11,8 +11,8 @@ import lombok.Setter;
 public class ClientCreateRequestDTO {
     @NotBlank(message = "O campo nome não pode ser vazio!")
     private String name;
-    @NotNull(message = "O tipo do cliente é obrigatório!")
+    @NotNull(message = "O tipo do cliente não pode ser vazio!")
     private ClientType clientType;
-    @NotNull(message = "O campo active é obrigatório!")
+    @NotNull(message = "O campo ativo não pode ser vazio!")
     private Boolean active;
 }

@@ -10,13 +10,12 @@ import lombok.Setter;
 @Setter
 public class ProductTypeCreateRequestDTO {
 
-    @NotBlank(message = "O campo nome, não pode ser vazio.")
+    @NotBlank(message = "O campo nome, não pode ser vazio!")
     private String name;
-    @NotBlank(message = "O campo código, não pode ser vazio.")
+    @NotBlank(message = "O campo código, não pode ser vazio!")
     private String internalCode;
-    @NotNull(message = "O campo projeto, não pode ser vazio.")
+    @NotNull(message = "O campo projeto, não pode ser vazio!")
     private Project project;
-    @NotNull(message = "O campo ativo, não pode ser vazio.")
+    @NotNull(message = "O campo ativo, não pode ser vazio!")
     private Boolean active;
-
 }

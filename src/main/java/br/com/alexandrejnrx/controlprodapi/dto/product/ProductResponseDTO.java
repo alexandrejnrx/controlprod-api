@@ -20,5 +20,4 @@ public class ProductResponseDTO {
     private LocalDate productionDate;
     private Integer batchNumber;
     private String producerName;
-
 }

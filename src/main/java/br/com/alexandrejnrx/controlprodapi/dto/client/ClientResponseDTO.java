@@ -12,5 +12,4 @@ public class ClientResponseDTO {
     private String name;
     private ClientType clientType;
     private Boolean active;
-
 }

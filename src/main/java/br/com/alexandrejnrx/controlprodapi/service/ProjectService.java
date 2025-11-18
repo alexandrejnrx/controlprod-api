@@ -40,6 +40,12 @@ public class ProjectService {
         projectRepository.delete(projectToDelete);
     }
 
+    public void updateName(Integer id, String newName) {
+        Project projectToUpdate = findById(id);
+
+        projectToUpdate.setName(newName);
+    }
+
     private Project findById(Integer id) {
         throw new ProjectNotFoundException();
     }

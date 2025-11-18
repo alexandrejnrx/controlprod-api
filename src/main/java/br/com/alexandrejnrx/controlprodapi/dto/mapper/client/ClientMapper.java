@@ -28,5 +28,4 @@ public class ClientMapper {
 
         return dto;
     }
-
 }
