@@ -96,6 +96,13 @@ public class ProductService {
         productRepository.save(existingProduct);
     }
 
+    public void updateBatchNumber(Integer id, Integer newBatchNumber) {
+        Product existingProduct = findById(id);
+
+        existingProduct.setBatchNumber(newBatchNumber);
+        productRepository.save(existingProduct);
+    }
+
     private Product findById(Integer id) {
         return productRepository.findById(id)
                 .orElseThrow(ProductNotFoundException::new);

@@ -1,6 +1,6 @@
 package br.com.alexandrejnrx.controlprodapi.dto.product;
 
-public record UpdateFirmwareVersion(
+public record UpdateFirmwareVersionDTO(
         String newFirmwareVersion
 ) {
 }

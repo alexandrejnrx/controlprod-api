@@ -99,9 +99,9 @@ public class ProductController {
     @PatchMapping("/{id}/update-firmware-version")
     public ResponseEntity<Void> updateFirmwareVersion(
             @PathVariable Integer id,
-            @RequestBody UpdateModemDTO dto
+            @RequestBody UpdateFirmwareVersionDTO dto
     ) {
-        productService.updateFirmwareVersion(id, dto.newModem());
+        productService.updateFirmwareVersion(id, dto.newFirmwareVersion());
 
         return ResponseEntity.noContent().build();
     }
@@ -112,6 +112,16 @@ public class ProductController {
             @RequestBody UpdateProductionDateDTO dto
     ) {
         productService.updateProductionDate(id, dto.newProductionDate());
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}/update-batch-number")
+    public ResponseEntity<Void> updateBatchNumber(
+            @PathVariable Integer id,
+            @RequestBody UpdateBatchNumberDTO dto
+    ) {
+        productService.updateBatchNumber(id, dto.batchNumber());
 
         return ResponseEntity.noContent().build();
     }
