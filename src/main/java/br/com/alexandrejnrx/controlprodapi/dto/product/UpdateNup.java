@@ -1,9 +1,9 @@
 package br.com.alexandrejnrx.controlprodapi.dto.product;
 
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public record UpdateNup(
-        @NotBlank(message = "O campo NUP não pode ser vazio.")
+        @NotNull(message = "O campo NUP não pode ser vazio.")
         Integer newNup
 ) {
 }
