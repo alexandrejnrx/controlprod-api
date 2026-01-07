@@ -5,6 +5,7 @@ import br.com.alexandrejnrx.controlprodapi.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -74,5 +75,14 @@ public class UserController {
         userService.updateEmail(id, dto.newEmail());
 
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<UserResponseDTO> getCurrentUser(Authentication authentication) {
+        String username = authentication.getName();
+
+        UserResponseDTO currentUser = userService.findByUsername(username);
+
+        return ResponseEntity.ok(currentUser);
     }
 }
